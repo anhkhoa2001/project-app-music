@@ -13,8 +13,6 @@ import com.example.appmusic.R;
 
 public class PlayListFragment extends Fragment {
 
-
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -1,8 +1,6 @@
 package com.example.appmusic.Activity;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,16 +11,12 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.widget.ImageView;
 
 import com.example.appmusic.API.DonationApi;
-import com.example.appmusic.Adapter.BannerAdapter;
 import com.example.appmusic.Adapter.SongListAdapter;
 import com.example.appmusic.Model.Music;
-import com.example.appmusic.Model.MusicGenre;
-import com.example.appmusic.Model.Song;
 import com.example.appmusic.R;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 
@@ -32,7 +26,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SongListActivity extends AppCompatActivity {
+public class SongListActivity extends Base {
     private int id;
     private CoordinatorLayout coordinatorLayout;
     private CollapsingToolbarLayout collapsingtoolbarLayout;
@@ -70,6 +64,7 @@ public class SongListActivity extends AppCompatActivity {
                 id = intent.getIntExtra("ID", 0);
                 // Truy Vấn DB với id
                 new GetAllTask().execute("/music/by-genre-id", String.valueOf(id));
+                Log.v("Music", "id" + id);
             } else {
                 id = intent.getIntExtra("Album_ID", 0);
                 // Truy Vấn DB với id

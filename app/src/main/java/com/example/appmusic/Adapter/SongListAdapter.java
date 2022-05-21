@@ -1,24 +1,21 @@
 package com.example.appmusic.Adapter;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.appmusic.Activity.PlayMusicActivity;
 import com.example.appmusic.Model.Music;
-import com.example.appmusic.Model.Song;
 import com.example.appmusic.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHolder>{
@@ -35,13 +32,13 @@ public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHo
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.song_list_item, viewGroup, false);
-        return new ViewHolder(view);
+        return new ViewHolder(view, i);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int i) {
         Music music = songList.get(i);
-        holder.songSinger.setText(music.getSinger());
+        holder.songSinger.setText(music.singersToString());
         holder.songName.setText(music.getName());
         holder.songIndex.setText(i + 1 + "");
     }
@@ -54,7 +51,7 @@ public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHo
     class ViewHolder extends RecyclerView.ViewHolder {
         TextView songIndex, songSinger, songName;
         ImageView songLike, songMyPlaylist;
-        ViewHolder(@NonNull View itemView) {
+        ViewHolder(@NonNull View itemView, int i) {
             super(itemView);
             songIndex = itemView.findViewById(R.id.song_index);
             songSinger = itemView.findViewById(R.id.song_singer);
@@ -66,7 +63,6 @@ public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHo
                 @Override
                 public void onClick(View view) {
                     songLike.setImageResource(R.drawable.iconloved);
-
                 }
             });
 
@@ -77,11 +73,15 @@ public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHo
 
                 }
             });
+
+
+
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(context, PlayMusicActivity.class);
                     context.startActivity(intent);
+                    Log.v("Music", songList.get(i).getSource());
                 }
             });
         }

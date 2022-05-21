@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,21 +15,17 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.appmusic.Activity.SongListActivity;
-import com.example.appmusic.Model.Album;
-import com.example.appmusic.Model.Popular;
 import com.example.appmusic.Model.Singer;
 import com.example.appmusic.R;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 
 public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> {
     Context context;
     List<Singer> albums;
-
 
     public AlbumAdapter (Context context, List<Singer> albums) {
         this.context = context;
@@ -65,7 +60,6 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             albumImage = itemView.findViewById(R.id.album_image);
-            albumName = itemView.findViewById(R.id.album_name);
             albumSinger = itemView.findViewById(R.id.album_singer);
 
             itemView.setOnClickListener(new View.OnClickListener() {

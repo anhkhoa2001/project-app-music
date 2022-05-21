@@ -1,6 +1,5 @@
 package com.example.appmusic.Fragment;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -11,7 +10,6 @@ import android.os.Bundle;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
-import android.os.Handler;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -24,9 +22,7 @@ import android.widget.TextView;
 
 import com.example.appmusic.API.DonationApi;
 import com.example.appmusic.Activity.SongListActivity;
-import com.example.appmusic.Adapter.BannerAdapter;
 import com.example.appmusic.Model.MusicGenre;
-import com.example.appmusic.Model.Popular;
 import com.example.appmusic.R;
 
 import java.io.IOException;

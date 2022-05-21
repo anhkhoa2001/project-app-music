@@ -1,12 +1,18 @@
 package com.example.appmusic.Model;
 
+import android.text.TextUtils;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class Music {
+
     private int id;
     private String name;
     private String source;
     private int musicTracks;//tinh theo s
     private String image;
-    private String singer;
+    private List<Singer> singers;
     private int listens;
     private int likes;
 
@@ -42,12 +48,12 @@ public class Music {
         this.image = image;
     }
 
-    public String getSinger() {
-        return singer;
+    public List<Singer> getSingers() {
+        return singers;
     }
 
-    public void setSinger(String singer) {
-        this.singer = singer;
+    public void setSingers(List<Singer> singers) {
+        this.singers = singers;
     }
 
     public int getListens() {
@@ -75,6 +81,14 @@ public class Music {
     }
 
     public Music() {
+    }
+
+    public String singersToString() {
+        List<String> nameSingers = new ArrayList<>();
+        for(Singer singer:singers) {
+            nameSingers.add(singer.getName());
+        }
+        return TextUtils.join(" ft ", nameSingers);
     }
 
 }

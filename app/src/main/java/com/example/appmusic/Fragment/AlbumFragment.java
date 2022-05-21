@@ -1,6 +1,5 @@
 package com.example.appmusic.Fragment;
 
-import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -8,7 +7,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,9 +15,6 @@ import android.widget.TextView;
 
 import com.example.appmusic.API.DonationApi;
 import com.example.appmusic.Adapter.AlbumAdapter;
-import com.example.appmusic.Adapter.BannerAdapter;
-import com.example.appmusic.Model.Album;
-import com.example.appmusic.Model.MusicGenre;
 import com.example.appmusic.Model.Singer;
 import com.example.appmusic.R;
 
@@ -46,6 +41,7 @@ public class AlbumFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recyclerView_album);
         albumMore = view.findViewById(R.id.album_more);
         new GetAllTask().execute("/singer/album", "3");
+
         return view;
     }
 

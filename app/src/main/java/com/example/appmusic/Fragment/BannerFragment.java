@@ -80,7 +80,7 @@ public class BannerFragment extends Fragment {
         protected void onPostExecute(List<MusicGenre> result) {
             super.onPostExecute(result);
             banners = result;
-            Log.v("Music","Size in post" + banners.size());
+            Log.v("Music","Size in post" + banners);
             bannerAdapter = new BannerAdapter(getActivity(), banners);
             viewPager.setAdapter(bannerAdapter);
             circleIndicator.setViewPager(viewPager);

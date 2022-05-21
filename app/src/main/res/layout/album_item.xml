@@ -21,19 +21,6 @@
             android:layout_height="200dp"
             android:scaleType="fitXY"
             android:layout_gravity="center"/>
-        <TextView
-            android:id="@+id/album_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginRight="2dp"
-            android:layout_marginLeft="2dp"
-            android:textColor="@color/black"
-            android:textSize="17sp"
-            android:maxWidth="200dp"
-            android:maxLines="1"
-            android:ellipsize="end"
-            android:text="Chỉ là không cùng nhau"/>
 
         <TextView
             android:id="@+id/album_singer"
@@ -45,7 +32,6 @@
             android:ellipsize="end"
             android:maxWidth="200dp"
             android:maxLines="1"
-            android:text="Tăng Phúc"
             android:textColor="@color/album_singer"
             android:textSize="15sp" />
 

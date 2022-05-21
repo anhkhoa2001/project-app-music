@@ -15,4 +15,6 @@
     <color name="popular_text">#F0F0F3</color>
     <color name="album_singer">#2E3133</color>
     <color name="album_background">#E1E3E5</color>
+    <color name="xanh_nhat">#3498DB</color>
+
 </resources>

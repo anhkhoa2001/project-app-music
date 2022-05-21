@@ -32,11 +32,10 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Base {
     TabLayout tabLayout;
     ViewPager2 viewPager;
     MainViewPagerAdapter mainViewPagerAdapter;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,14 +45,12 @@ public class MainActivity extends AppCompatActivity {
         tabLayout  = findViewById(R.id.myTabLayout);
         viewPager = findViewById(R.id.myViewPaper);
 
-        mainViewPagerAdapter = new MainViewPagerAdapter(getSupportFragmentManager(),getLifecycle());
+        mainViewPagerAdapter = new MainViewPagerAdapter(getSupportFragmentManager(),getLifecycle(), this);
 
 //        mainViewPagerAdapter.FragmentAdd(new HomeFragment(),"Home");
 //        mainViewPagerAdapter.FragmentAdd(new SearchFragment(),"Search");
 
         viewPager.setAdapter(mainViewPagerAdapter);
-
-
         new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {
             switch (position) {
                 case 0:
@@ -64,7 +61,10 @@ public class MainActivity extends AppCompatActivity {
                     tab.setIcon(R.drawable.icontimkiem);
                     tab.setText("Search");
                     break;
-
+                case 2:
+                    tab.setIcon(R.drawable.iconuser);
+                    tab.setText("Login");
+                    break;
             }
         }).attach();
 

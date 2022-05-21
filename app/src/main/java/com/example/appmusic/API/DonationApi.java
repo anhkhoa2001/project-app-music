@@ -5,6 +5,8 @@ import android.util.Log;
 import com.example.appmusic.Model.Music;
 import com.example.appmusic.Model.MusicGenre;
 import com.example.appmusic.Model.Singer;
+import com.example.appmusic.Model.User;
+import com.example.appmusic.result.EResponse;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -54,11 +56,29 @@ public class DonationApi {
 	public static String delete(String call, String id) {
 		return Rest.delete(call + "?id=" + id);
 	}
+*/
+	public static String login(String call, User user) {
+		Type objType = new TypeToken<User>(){}.getType();
+		String json = new Gson().toJson(user, objType);
 
-	public static String insert(String call, Donation donation) {
-		Type objType = new TypeToken<Donation>(){}.getType();
-		String json = new Gson().toJson(donation, objType);
-  
+		Log.v("Music", "JSON LOGIN : " + json);
+
 		return Rest.post(call, json);
-	}*/
+	}
+
+	public static String register(String call, User user) {
+		Type objType = new TypeToken<User>(){}.getType();
+		String json = new Gson().toJson(user, objType);
+
+		Log.v("Music", "JSON REGISTER : " + json);
+
+		return Rest.post(call, json);
+	}
+
+	public static String checkAuthentication(String call, String token) {
+		Type objType = new TypeToken<User>(){}.getType();
+		String json = new Gson().toJson(token, objType);
+
+		return Rest.post(call, json);
+	}
 }

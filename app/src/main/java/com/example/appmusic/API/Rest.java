@@ -22,7 +22,7 @@ public class Rest {
 	//tạo kết nối tới api
 	public static void setup(String request) {
 		try {
-			url = new URL(hostURL_Tro + request);
+			url = new URL(hostURL_Nha + request);
 			httpCon = (HttpURLConnection) url.openConnection();
 			httpCon.setUseCaches(false);
             httpCon.setReadTimeout(15 * 1000); // 15 seconds to timeout
@@ -111,7 +111,7 @@ public class Rest {
             httpCon.setDoInput(true);
             httpCon.connect();
 
-            Log.v("Donate", "POST REQUEST is : " + httpCon.getRequestMethod() + " " + httpCon.getURL());
+            Log.v("Music", "POST REQUEST is : " + httpCon.getRequestMethod() + " " + httpCon.getURL());
 
             // đọc dữ liệu json vào trong body của post request
             writer = new OutputStreamWriter(httpCon.getOutputStream());
@@ -125,7 +125,7 @@ public class Rest {
         }
 
         catch (Exception e) {
-            Log.v("Donate","POST REQUEST ERROR" + e.getMessage());
+            Log.v("Music","POST REQUEST ERROR" + e.getMessage());
         }
 
         return data;

@@ -4,38 +4,31 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager2.widget.ViewPager2;
 
-import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.StrictMode;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import com.example.appmusic.API.DonationApi;
 import com.example.appmusic.Adapter.PlayMusicViewPagerAdapter;
 import com.example.appmusic.Fragment.MusicDiscFragment;
 import com.example.appmusic.Fragment.PlayListFragment;
 import com.example.appmusic.Model.Music;
-import com.example.appmusic.Model.MusicGenre;
-import com.example.appmusic.Model.Song;
 import com.example.appmusic.R;
 
-import java.io.IOException;
-import java.text.SimpleDateFormat;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
-public class PlayMusicActivity extends AppCompatActivity {
+public class PlayMusicActivity extends Base implements
+        MediaPlayer.OnCompletionListener, MediaPlayer.OnBufferingUpdateListener, View.OnTouchListener {
 
     Toolbar toolbar;
     TextView txtTime, txtTotalTime;
@@ -51,6 +44,10 @@ public class PlayMusicActivity extends AppCompatActivity {
     boolean repeat = false;
     boolean checkrandom = false;
     boolean next = false;
+    private int mediaFileLengthInMilliseconds;
+    String URL_MUSIC;
+
+    private final Handler handler = new Handler();
 
 
     @Override
@@ -64,8 +61,60 @@ public class PlayMusicActivity extends AppCompatActivity {
         GetDataFromIntent();
         setID();
 //        eventClick();
+/*        Intent intent = getIntent();
+        if (intent != null) {
+            if (intent.hasExtra("Music_Source")) {
+                URL_MUSIC = intent.getStringExtra("Music_Source");
+            }
+        }*/
+        mediaPlayer = new MediaPlayer();
+
+        try {
+            mediaPlayer.setDataSource("http://192.168.2.105:8080/sounds/vn/Bray%20-%20Con%20trai%20cưng.mp3");
+            mediaPlayer.prepare();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        mediaFileLengthInMilliseconds = mediaPlayer.getDuration();
+        Log.v("Music", "duration   " + mediaFileLengthInMilliseconds);
+        txtTotalTime.setText(convertMillisecondsToMinutes(mediaFileLengthInMilliseconds));
+
+        if(!mediaPlayer.isPlaying()){
+            mediaPlayer.start();
+            btnPlay.setImageResource(R.drawable.iconplay);
+        }else {
+            mediaPlayer.pause();
+            btnPlay.setImageResource(R.drawable.iconpause);
+        }
+
+        primarySeekBarProgressUpdater();
+
+        mediaPlayer.setOnBufferingUpdateListener(this);
+        mediaPlayer.setOnCompletionListener(this);
     }
 
+    public String convertMillisecondsToMinutes(int miniseconds) {
+        int minutes = (int) TimeUnit.MILLISECONDS.toMinutes(miniseconds);
+        int seconds = (int) TimeUnit.MILLISECONDS.toSeconds(miniseconds)%60;
+
+        return minutes + ":" + String.format("%02d", seconds);
+    }
+
+    private void primarySeekBarProgressUpdater() {
+        seekBar.setProgress((int)(((float)mediaPlayer.getCurrentPosition()/mediaFileLengthInMilliseconds)*100));
+
+        Log.v("Music", "time current" + mediaPlayer.getCurrentPosition()/1000 + 1);
+        txtTime.setText(convertMillisecondsToMinutes(mediaPlayer.getCurrentPosition()));
+        if (mediaPlayer.isPlaying()) {
+            Runnable notification = new Runnable() {
+                public void run() {
+                    primarySeekBarProgressUpdater();
+                }
+            };
+            handler.postDelayed(notification,1000);
+        }
+    }
 
 
     private void GetDataFromIntent() {
@@ -91,8 +140,29 @@ public class PlayMusicActivity extends AppCompatActivity {
         viewPager.setAdapter(adapternhac);
 //        fragment_dia_nhac = (MusicDiscFragment) getSupportFragmentManager().findFragmentByTag("f" + position);
 
+
+        seekBar.setOnTouchListener(this);
     }
 
 
+    @Override
+    public void onCompletion(MediaPlayer mp) {
+    }
 
+    @Override
+    public void onBufferingUpdate(MediaPlayer mp, int percent) {
+        seekBar.setSecondaryProgress(percent);
+    }
+
+    @Override
+    public boolean onTouch(View view, MotionEvent motionEvent) {
+        if(view.getId() == R.id.seekbar_song){
+             if(mediaPlayer.isPlaying()){
+                SeekBar sb = (SeekBar) view;
+                int playPositionInMillisecconds = (mediaFileLengthInMilliseconds / 100) * sb.getProgress();
+                mediaPlayer.seekTo(playPositionInMillisecconds);
+            }
+        }
+        return false;
+    }
 }
