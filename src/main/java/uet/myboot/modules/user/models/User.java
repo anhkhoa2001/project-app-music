@@ -5,6 +5,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "account")
 public class User {
+
     @Id
     @Basic
     private int id;
@@ -93,5 +94,18 @@ public class User {
         this.name = name;
         this.password = password;
         this.phone = phone;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", role='" + role + '\'' +
+                ", email='" + email + '\'' +
+                ", name='" + name + '\'' +
+                ", password='" + password + '\'' +
+                ", phone='" + phone + '\'' +
+                '}';
     }
 }

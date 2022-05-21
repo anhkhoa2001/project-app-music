@@ -60,7 +60,7 @@ public class MusicGenre {
 
     @Override
     public String toString() {
-        return "MusicGenre{" +
+        return "Donation{" +
                 "name='" + name + '\'' +
                 ", musics=" + musics +
                 ", source='" + source + '\'' +

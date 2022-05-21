@@ -15,7 +15,8 @@ import java.util.Map;
 
 public class Main {
 
-    public static final String URL_IP = "http://192.168.2.105:8080/";
+    public static final String URL_IP_TRO = "http://192.168.2.105:8080/";
+    public static final String URL_IP = "http://192.168.1.70:8080/";
 
     static List<String> list = new ArrayList<>();
     public static void listFilesForFolder(final File folder) {
@@ -56,6 +57,6 @@ public class Main {
 
     public static void main(String[] args) throws UnsupportedAudioFileException, IOException {
 
-        System.out.println(getDurationWithMp3Spi(folder));
+        System.out.println(String.format("%02d", 1));
     }
 }
