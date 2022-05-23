@@ -1,10 +1,14 @@
 package uet.myboot.modules.music.models;
 
+import org.springframework.web.util.UriUtils;
 import uet.myboot.modules.genre.models.MusicGenre;
 import uet.myboot.modules.singer.models.Singer;
 import uet.myboot.parent.main.Main;
 
 import javax.persistence.*;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 @Entity
@@ -62,8 +66,11 @@ public class Music {
         this.name = name;
     }
 
-    public String getSource() {
-        return Main.URL_IP + source;
+    public String getSource() throws UnsupportedEncodingException {
+        String nameMusic = source.split("sounds/")[1].split("/")[1].split(".mp3")[0];
+
+        return (Main.URL_IP + source).replaceAll(nameMusic,
+                UriUtils.encodePath(nameMusic, "UTF-8"));
     }
 
     public void setSource(String source) {
