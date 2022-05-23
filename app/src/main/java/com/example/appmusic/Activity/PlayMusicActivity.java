@@ -43,7 +43,6 @@ public class PlayMusicActivity extends Base implements
     MediaPlayer mediaPlayer;
     MusicDiscFragment fragment_dia_nhac;
     PlayListFragment fragment_play_danhsach_baihat;
-    public static List<Music> mangBaiHat = new ArrayList<>();
     public static PlayMusicViewPagerAdapter adapternhac;
     int position = 0;
     boolean repeat = false;
@@ -53,7 +52,12 @@ public class PlayMusicActivity extends Base implements
     private String URL_MUSIC;
     private String URL_MUSIC_PRIOR;
     private String URL_MUSIC_AFTER;
+    private int music_id;
+    private String[] musics;
     //true la nhac dang duoc mo
+    private int doRepeat = 0;
+    private boolean isPause; // true la da dung
+    boolean isBack = false; // true la da an vao back
 
     private final Handler handler = new Handler();
 
@@ -61,7 +65,8 @@ public class PlayMusicActivity extends Base implements
     public void onBackPressed() {
         Log.v("Music", "you clicked button back");
         mediaPlayer.pause();
-        Intent intent = new Intent(this, SongListActivity.class);
+        isBack = true;
+        Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra(getIntent().getStringExtra("Type_ID"), getIntent().getIntExtra("Music_ID", 0));
         this.startActivity(intent);
     }
@@ -75,22 +80,18 @@ public class PlayMusicActivity extends Base implements
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
-        GetDataFromIntent();
         setID();
 //        eventClick();
-        Intent intent = getIntent();
-        if (intent != null) {
-            URL_MUSIC = intent.hasExtra("Music_Source") ? intent.getStringExtra("Music_Source") : null;
-            URL_MUSIC_PRIOR = intent.hasExtra("Music_Source_Prior") ? intent.getStringExtra("Music_Source_Prior") : null;
-            URL_MUSIC_AFTER = intent.hasExtra("Music_Source_After") ? intent.getStringExtra("Music_Source_After") : null;
-        }
         mediaPlayer = new MediaPlayer();
 
+        runMusic(URL_MUSIC);
+    }
+
+    public void runMusic(String url) {
+        btnPlay.setImageResource(R.drawable.ic_pause_white);
+        Log.v("Music", "url music " + url);
         try {
-            Log.v("Music", "name music 1  " + URL_MUSIC);
-            Log.v("Music", "name music pri  " + URL_MUSIC_PRIOR);
-            Log.v("Music", "name music after  " + URL_MUSIC_AFTER);
-            mediaPlayer.setDataSource(URL_MUSIC);
+            mediaPlayer.setDataSource(url);
             mediaPlayer.prepare();
             mediaPlayer.start();
         } catch (Exception e) {
@@ -106,22 +107,15 @@ public class PlayMusicActivity extends Base implements
                 if(mediaPlayer.isPlaying()) {
                     mediaPlayer.pause();
                     btnPlay.setImageResource(R.drawable.iconplay);
+                    isPause = true;
                 } else {
+                    isPause = false;
                     mediaPlayer.start();
-                    btnPlay.setImageResource(R.drawable.iconpause);
+                    btnPlay.setImageResource(R.drawable.ic_pause_white);
+                    primarySeekBarProgressUpdater();
                 }
             }
         });
-
-        seekBar.setOnDragListener(new View.OnDragListener() {
-            @Override
-            public boolean onDrag(View view, DragEvent dragEvent) {
-                Log.v("Music", mediaPlayer.getCurrentPosition() + "===");
-
-                return true;
-            }
-        });
-
 
         primarySeekBarProgressUpdater();
 
@@ -137,10 +131,8 @@ public class PlayMusicActivity extends Base implements
     }
 
     private void primarySeekBarProgressUpdater() {
-        seekBar.setProgress((int)(((float)mediaPlayer.getCurrentPosition()/mediaFileLengthInMilliseconds)*100));
+        seekBar.setProgress((int)(((float) mediaPlayer.getCurrentPosition()/mediaFileLengthInMilliseconds)*100));
 
-        Log.v("Music", "time current" + mediaPlayer.getCurrentPosition()/1000 + 1);
-        eventHandlerRepeat();
         txtTime.setText(convertMillisecondsToMinutes(mediaPlayer.getCurrentPosition()));
         if (mediaPlayer.isPlaying()) {
             Runnable notification = new Runnable() {
@@ -150,17 +142,22 @@ public class PlayMusicActivity extends Base implements
             };
             handler.postDelayed(notification,1000);
         } else {
-            btnPlay.setImageResource(R.drawable.iconplay);
+            eventHandlerRepeat();
         }
     }
 
-
-    private void GetDataFromIntent() {
-        Intent intent = getIntent();
-        mangBaiHat.clear();
-    }
-
     private void setID() {
+        Intent intent = getIntent();
+        if (intent != null) {
+            URL_MUSIC = intent.hasExtra("Music_Source") ? intent.getStringExtra("Music_Source") : null;
+            Log.v("Music", "dsajsdja " + URL_MUSIC);
+            /*URL_MUSIC_PRIOR = intent.hasExtra("Music_Source_Prior") ? intent.getStringExtra("Music_Source_Prior") : null;
+            URL_MUSIC_AFTER = intent.hasExtra("Music_Source_After") ? intent.getStringExtra("Music_Source_After") : null;
+        */
+            music_id = intent.hasExtra("ID") ? intent.getIntExtra("ID", 0) : null;
+            musics = intent.hasExtra("Musics") ? intent.getStringArrayExtra("Musics") : null;
+        }
+
         toolbar = findViewById(R.id.toolbar_play_nhac);
         seekBar = findViewById(R.id.seekbar_song);
         txtTime = findViewById(R.id.txt_time_song);
@@ -174,7 +171,7 @@ public class PlayMusicActivity extends Base implements
 
 
         adapternhac = new PlayMusicViewPagerAdapter(getSupportFragmentManager(),getLifecycle());
-        btnPlay.setImageResource(R.drawable.iconpause);
+        btnPlay.setImageResource(R.drawable.ic_pause_white);
 
         viewPager.setAdapter(adapternhac);
 //        fragment_dia_nhac = (MusicDiscFragment) getSupportFragmentManager().findFragmentByTag("f" + position);
@@ -192,15 +189,53 @@ public class PlayMusicActivity extends Base implements
             }
         });
 
+        btnNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                btnPlay.setImageResource(R.drawable.ic_pause_white);
+                mediaPlayer.pause();
+                mediaPlayer.reset();
+               /* if (URL_MUSIC_AFTER == null) {
+                    runMusic(URL_MUSIC);
+                } else {
+                    runMusic(URL_MUSIC_AFTER);
+                }*/
+                if(music_id == musics.length - 1) {
+                    runMusic(URL_MUSIC);
+                } else {
+                    music_id++;
+                    Log.v("Music", musics[music_id].split("khoanamhet")[1]);
+                    runMusic(musics[music_id].split("khoanamhet")[1]);
+                    URL_MUSIC = musics[music_id].split("khoanamhet")[1];
+                }
+            }
+        });
+
+        btnPreview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                btnPlay.setImageResource(R.drawable.ic_pause_white);
+                mediaPlayer.pause();
+                mediaPlayer.reset();
+                if(music_id == 0) {
+                    runMusic(URL_MUSIC);
+                } else {
+                    music_id--;
+                    Log.v("Music", musics[music_id].split("khoanamhet")[1]);
+                    runMusic(musics[music_id].split("khoanamhet")[1]);
+                    URL_MUSIC = musics[music_id].split("khoanamhet")[1];
+                }
+            }
+        });
+
         seekBar.setOnTouchListener(this);
     }
 
     public void eventHandlerRepeat() {
-        if(repeat && !mediaPlayer.isPlaying()) {
-            mediaPlayer.start();
-            btnPlay.setImageResource(R.drawable.iconpause);
-        } else {
-
+        if(repeat && !isPause && !isBack) {
+            btnPlay.setImageResource(R.drawable.ic_pause_white);
+            mediaPlayer.reset();
+            runMusic(URL_MUSIC);
         }
     }
 

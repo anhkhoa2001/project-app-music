@@ -39,6 +39,14 @@ public class DonationApi {
 		return list;
 	}
 
+	public static List<Music> getAllMusic(String call) {
+		String json = Rest.get(call);
+		Log.v("Music", "JSON RESULT : " + json);
+		Type collectionType = new TypeToken<List<Music>>(){}.getType();
+		List<Music> list = new Gson().fromJson(json, collectionType);
+		return list;
+	}
+
 
 /*
 	public static Donation getOne(String call, String id) {

@@ -83,17 +83,26 @@ public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHo
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(context, PlayMusicActivity.class);
-                    Log.v("Music", songIndex.getText().toString());
                     intent.putExtra("Music_Source", songList.get(Integer.parseInt(songIndex.getText().toString()) - 1).getSource());
                     intent.putExtra("Music_ID", id);
                     intent.putExtra("Type_ID", type_id);
-                    intent.putExtra("Music_Source_Prior", Integer.parseInt(songIndex.getText().toString()) - 1 < 0 ?
-                                            null : songList.get(Integer.parseInt(songIndex.getText().toString()) - 2).getName());
-                    intent.putExtra("Music_Source_After", Integer.parseInt(songIndex.getText().toString()) - 1 > songList.size() ?
-                                            null : songList.get(Integer.parseInt(songIndex.getText().toString())).getName());
+                    intent.putExtra("Music_Source_Prior", Integer.parseInt(songIndex.getText().toString()) - 1 <= 0 ?
+                                            null : songList.get(Integer.parseInt(songIndex.getText().toString()) - 2).getSource());
+                    intent.putExtra("Music_Source_After", Integer.parseInt(songIndex.getText().toString()) >= songList.size() ?
+                                            null : songList.get(Integer.parseInt(songIndex.getText().toString()) - 1).getSource());
+                    intent.putExtra("ID", Integer.parseInt(songIndex.getText().toString()) - 1);
+                    intent.putExtra("Musics", listToStrings(songList));
                     context.startActivity(intent);
                 }
             });
         }
+    }
+
+    public String[] listToStrings(List<Music> musics) {
+        String[] array = new String[musics.size()];
+        for(int i=0; i<musics.size(); i++) {
+            array[i] = musics.get(i).getName() + "khoanamhet" + musics.get(i).getSource();
+        }
+        return array;
     }
 }
