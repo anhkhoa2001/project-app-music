@@ -22,10 +22,6 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        BannerFragment nextFrag= new BannerFragment();
-        getActivity().getSupportFragmentManager().beginTransaction()
-                .add(R.id.linear_layout, nextFrag)
-                .commit();
         return view;
     }
 }

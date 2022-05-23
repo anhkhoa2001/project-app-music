@@ -28,12 +28,20 @@ import java.util.List;
 
 public class SongListActivity extends Base {
     private int id;
+    private String type_id;
     private CoordinatorLayout coordinatorLayout;
     private CollapsingToolbarLayout collapsingtoolbarLayout;
     private RecyclerView recyclerviewSongList;
     private List<Music> songList = new ArrayList<>();
     private String name;
     private SongListAdapter songListAdapter;
+
+    @Override
+    public void onBackPressed() {
+        Log.v("Music", "you clicked button back");
+        Intent intent = new Intent(this, MainActivity.class);
+        this.startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,13 +67,20 @@ public class SongListActivity extends Base {
     }
 
     public void getDataIntent(Intent intent) {
+
         if (intent != null) {
+            if (intent.hasExtra("Type_ID")) {
+                type_id = intent.getStringExtra("Type_ID");
+                id = intent.getIntExtra(intent.getStringExtra("Type_ID"), 0);
+            }
+
             if (intent.hasExtra("ID")) {
                 id = intent.getIntExtra("ID", 0);
+                type_id = "ID";
                 // Truy Vấn DB với id
                 new GetAllTask().execute("/music/by-genre-id", String.valueOf(id));
-                Log.v("Music", "id" + id);
             } else {
+                type_id = "Album_ID";
                 id = intent.getIntExtra("Album_ID", 0);
                 // Truy Vấn DB với id
                 new GetAllTask().execute("/music/by-singer-id", String.valueOf(id));
@@ -96,8 +111,7 @@ public class SongListActivity extends Base {
             super.onPostExecute(result);
 
             songList = result;
-            Log.v("Music", "song list size" + songList);
-            songListAdapter = new SongListAdapter(SongListActivity.this,songList);
+            songListAdapter = new SongListAdapter(SongListActivity.this, songList, id, type_id);
             recyclerviewSongList.setLayoutManager(new LinearLayoutManager(SongListActivity.this));
             recyclerviewSongList.setAdapter(songListAdapter);
         }

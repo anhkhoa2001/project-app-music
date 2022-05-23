@@ -14,7 +14,7 @@ public class Rest {
 	private static HttpURLConnection 	httpCon = null;
 	private static URL 					url;
 
-	private static final String hostURL_Tro = "http://192.168.2.105:8080";
+	private static final String hostURL_Tro = "http://172.24.16.1:8080";
 	private static final String hostURL_Nha = "http://192.168.1.70:8080";
 	private static final String LocalhostURL = "http://192.168.0.13:3000";
 	
@@ -22,7 +22,7 @@ public class Rest {
 	//tạo kết nối tới api
 	public static void setup(String request) {
 		try {
-			url = new URL(hostURL_Nha + request);
+			url = new URL(hostURL_Tro + request);
 			httpCon = (HttpURLConnection) url.openConnection();
 			httpCon.setUseCaches(false);
             httpCon.setReadTimeout(15 * 1000); // 15 seconds to timeout

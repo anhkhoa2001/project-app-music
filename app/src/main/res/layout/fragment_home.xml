@@ -14,6 +14,24 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+
+        <fragment
+            android:id="@+id/fragment_banner"
+            android:name="com.example.appmusic.Fragment.BannerFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <fragment
+            android:id="@+id/fragment_popular"
+            android:name="com.example.appmusic.Fragment.PopularFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <fragment
+            android:id="@+id/fragment_album"
+            android:name="com.example.appmusic.Fragment.AlbumFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
     </LinearLayout>
 
 

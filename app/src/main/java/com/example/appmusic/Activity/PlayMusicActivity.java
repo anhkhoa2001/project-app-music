@@ -5,13 +5,16 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
+import android.content.res.AssetFileDescriptor;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.StrictMode;
 import android.util.Log;
+import android.view.DragEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -23,6 +26,8 @@ import com.example.appmusic.Model.Music;
 import com.example.appmusic.R;
 
 import java.net.URL;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -45,9 +50,21 @@ public class PlayMusicActivity extends Base implements
     boolean checkrandom = false;
     boolean next = false;
     private int mediaFileLengthInMilliseconds;
-    String URL_MUSIC;
+    private String URL_MUSIC;
+    private String URL_MUSIC_PRIOR;
+    private String URL_MUSIC_AFTER;
+    //true la nhac dang duoc mo
 
     private final Handler handler = new Handler();
+
+    @Override
+    public void onBackPressed() {
+        Log.v("Music", "you clicked button back");
+        mediaPlayer.pause();
+        Intent intent = new Intent(this, SongListActivity.class);
+        intent.putExtra(getIntent().getStringExtra("Type_ID"), getIntent().getIntExtra("Music_ID", 0));
+        this.startActivity(intent);
+    }
 
 
     @Override
@@ -61,32 +78,50 @@ public class PlayMusicActivity extends Base implements
         GetDataFromIntent();
         setID();
 //        eventClick();
-/*        Intent intent = getIntent();
+        Intent intent = getIntent();
         if (intent != null) {
-            if (intent.hasExtra("Music_Source")) {
-                URL_MUSIC = intent.getStringExtra("Music_Source");
-            }
-        }*/
+            URL_MUSIC = intent.hasExtra("Music_Source") ? intent.getStringExtra("Music_Source") : null;
+            URL_MUSIC_PRIOR = intent.hasExtra("Music_Source_Prior") ? intent.getStringExtra("Music_Source_Prior") : null;
+            URL_MUSIC_AFTER = intent.hasExtra("Music_Source_After") ? intent.getStringExtra("Music_Source_After") : null;
+        }
         mediaPlayer = new MediaPlayer();
 
         try {
-            mediaPlayer.setDataSource("http://192.168.2.105:8080/sounds/vn/Bray%20-%20Con%20trai%20cưng.mp3");
+            Log.v("Music", "name music 1  " + URL_MUSIC);
+            Log.v("Music", "name music pri  " + URL_MUSIC_PRIOR);
+            Log.v("Music", "name music after  " + URL_MUSIC_AFTER);
+            mediaPlayer.setDataSource(URL_MUSIC);
             mediaPlayer.prepare();
+            mediaPlayer.start();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         mediaFileLengthInMilliseconds = mediaPlayer.getDuration();
-        Log.v("Music", "duration   " + mediaFileLengthInMilliseconds);
         txtTotalTime.setText(convertMillisecondsToMinutes(mediaFileLengthInMilliseconds));
 
-        if(!mediaPlayer.isPlaying()){
-            mediaPlayer.start();
-            btnPlay.setImageResource(R.drawable.iconplay);
-        }else {
-            mediaPlayer.pause();
-            btnPlay.setImageResource(R.drawable.iconpause);
-        }
+        btnPlay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(mediaPlayer.isPlaying()) {
+                    mediaPlayer.pause();
+                    btnPlay.setImageResource(R.drawable.iconplay);
+                } else {
+                    mediaPlayer.start();
+                    btnPlay.setImageResource(R.drawable.iconpause);
+                }
+            }
+        });
+
+        seekBar.setOnDragListener(new View.OnDragListener() {
+            @Override
+            public boolean onDrag(View view, DragEvent dragEvent) {
+                Log.v("Music", mediaPlayer.getCurrentPosition() + "===");
+
+                return true;
+            }
+        });
+
 
         primarySeekBarProgressUpdater();
 
@@ -105,6 +140,7 @@ public class PlayMusicActivity extends Base implements
         seekBar.setProgress((int)(((float)mediaPlayer.getCurrentPosition()/mediaFileLengthInMilliseconds)*100));
 
         Log.v("Music", "time current" + mediaPlayer.getCurrentPosition()/1000 + 1);
+        eventHandlerRepeat();
         txtTime.setText(convertMillisecondsToMinutes(mediaPlayer.getCurrentPosition()));
         if (mediaPlayer.isPlaying()) {
             Runnable notification = new Runnable() {
@@ -113,6 +149,8 @@ public class PlayMusicActivity extends Base implements
                 }
             };
             handler.postDelayed(notification,1000);
+        } else {
+            btnPlay.setImageResource(R.drawable.iconplay);
         }
     }
 
@@ -136,14 +174,35 @@ public class PlayMusicActivity extends Base implements
 
 
         adapternhac = new PlayMusicViewPagerAdapter(getSupportFragmentManager(),getLifecycle());
+        btnPlay.setImageResource(R.drawable.iconpause);
 
         viewPager.setAdapter(adapternhac);
 //        fragment_dia_nhac = (MusicDiscFragment) getSupportFragmentManager().findFragmentByTag("f" + position);
 
+        btnRepeat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(repeat) {
+                    repeat = false;
+                } else {
+                    repeat = true;
+                }
+                float deg = btnRepeat.getRotation() + 90F;
+                btnRepeat.animate().rotation(deg).setInterpolator(new AccelerateDecelerateInterpolator());
+            }
+        });
 
         seekBar.setOnTouchListener(this);
     }
 
+    public void eventHandlerRepeat() {
+        if(repeat && !mediaPlayer.isPlaying()) {
+            mediaPlayer.start();
+            btnPlay.setImageResource(R.drawable.iconpause);
+        } else {
+
+        }
+    }
 
     @Override
     public void onCompletion(MediaPlayer mp) {

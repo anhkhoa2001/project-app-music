@@ -67,8 +67,6 @@ public class MainActivity extends Base {
                     break;
             }
         }).attach();
-
-
     }
 
 }
