@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import uet.myboot.donation.models.Donation;
 import uet.myboot.donation.service.DonationService;
-import uet.myboot.modules.user.models.User;
 
 import javax.validation.Valid;
 import java.util.List;

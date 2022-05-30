@@ -11,13 +11,14 @@ import java.util.List;
 public class MusicGenre {
 
     @Id
-    @Basic
+    @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int id;
 
     @Basic
     private String name;
 
-    @ManyToMany(mappedBy = "musicGenres", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "musicGenres")
     List<Music> musics;
 
     @Basic
@@ -58,12 +59,11 @@ public class MusicGenre {
         this.slogan = slogan;
     }
 
-    @Override
-    public String toString() {
-        return "Donation{" +
-                "name='" + name + '\'' +
-                ", musics=" + musics +
-                ", source='" + source + '\'' +
-                '}';
+    public List<Music> getMusics() {
+        return musics;
+    }
+
+    public void setMusics(final List<Music> musics) {
+        this.musics = musics;
     }
 }

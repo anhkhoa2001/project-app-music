@@ -1,10 +1,8 @@
 package uet.myboot.modules.singer.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import uet.myboot.modules.music.models.Music;
-import uet.myboot.modules.music.respositories.MusicRepository;
 import uet.myboot.modules.singer.models.Singer;
 import uet.myboot.modules.singer.repository.SingerRepository;
 
@@ -56,7 +54,9 @@ public class SingerService {
     public List<Singer> filterSingers(List<Singer> singers) {
         for(Singer singer:singers) {
             for(Music music:singer.getMusics()) {
-                music.setSingers(null);
+                music.setSingers(Collections.emptyList());
+                music.setMusicGenres(Collections.emptyList());
+                music.setUsers(Collections.emptyList());
             }
         }
 

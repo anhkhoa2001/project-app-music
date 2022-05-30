@@ -1,13 +1,19 @@
 package uet.myboot.modules.user.models;
 
+import uet.myboot.modules.music.models.Music;
+import uet.myboot.modules.singer.models.Singer;
+
 import javax.persistence.*;
+import java.util.List;
+import java.util.Set;
 
 @Entity
-@Table(name = "account")
+@Table(name = "user")
 public class User {
 
     @Id
-    @Basic
+    @Column(name = "id")
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int id;
 
     @Basic
@@ -27,6 +33,12 @@ public class User {
 
     @Basic
     private String phone;
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "music_like",
+            joinColumns = {@JoinColumn(name = "id_music")},
+            inverseJoinColumns = {@JoinColumn(name = "id_user")})
+    Set<Music> favourites;
 
     public User() {}
 
@@ -96,16 +108,11 @@ public class User {
         this.phone = phone;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", role='" + role + '\'' +
-                ", email='" + email + '\'' +
-                ", name='" + name + '\'' +
-                ", password='" + password + '\'' +
-                ", phone='" + phone + '\'' +
-                '}';
+    public Set<Music> getFavourites() {
+        return favourites;
+    }
+
+    public void setFavourites(final Set<Music> favourites) {
+        this.favourites = favourites;
     }
 }

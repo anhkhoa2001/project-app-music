@@ -1,6 +1,5 @@
 package uet.myboot.parent.main;
 
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.HashMap;
@@ -18,7 +17,7 @@ import uet.myboot.modules.user.models.User;
 @Component
 public class JwtTokenUtil {
 
-    public static final long JWT_TOKEN_VALIDITY = 30;
+    public static final long JWT_TOKEN_VALIDITY = 30*60;
 
     @Value("${jwt.secret}")
     private String secret;

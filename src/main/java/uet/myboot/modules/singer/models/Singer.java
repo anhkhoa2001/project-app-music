@@ -10,7 +10,8 @@ import java.util.List;
 public class Singer {
 
     @Id
-    @Basic
+    @Column(name = "id")
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int id;
 
     @Basic

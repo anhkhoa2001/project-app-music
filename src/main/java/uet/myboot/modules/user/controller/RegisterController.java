@@ -22,16 +22,16 @@ public class RegisterController {
     @PostMapping
     public EResponse registor(@Valid @RequestBody final User user) {
         try {
-            List<User> users = userService.getAll();
+            List<User> userCopies = userService.getAll();
             int count = 0;
-            for(User user1 : users) {
+            for(User user1 : userCopies) {
                 if(user.getUsername().equals(user1.getUsername())) {
                     count++;
                 }
             }
             boolean isno = false;
             if(count == 0) {
-                isno = userService.save(user);
+                isno = userService.create(user);
             }
 
             return isno ? EResponse.SUCCESS : EResponse.FAILED;

@@ -18,17 +18,16 @@ public class MusicGenreController {
 
     @GetMapping
     public List<MusicGenre> getAll() {
-
-        return musicGenreService.getAll();
+        return musicGenreService.filterMusicGenres(musicGenreService.getAll());
     }
 
     @GetMapping(value = "/top")
     public List<MusicGenre> getAllGenreTop() {
-        return musicGenreService.getAll().subList(0, 3);
+        return musicGenreService.filterMusicGenres(musicGenreService.getAll().subList(0, 3));
     }
 
     @GetMapping(value = "/bot")
     public List<MusicGenre> getAllGenreBot() {
-        return musicGenreService.getAll().subList(3, 6);
+        return musicGenreService.filterMusicGenres(musicGenreService.getAll().subList(3, 6));
     }
 }

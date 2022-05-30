@@ -6,7 +6,9 @@ import uet.myboot.modules.genre.models.MusicGenre;
 import uet.myboot.modules.genre.repository.MusicGenreRepository;
 import uet.myboot.modules.music.models.Music;
 import uet.myboot.modules.music.respositories.MusicRepository;
+import uet.myboot.modules.singer.models.Singer;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -35,6 +37,17 @@ public class MusicGenreService {
 
     public MusicGenre getOne(int id) {
         return musicGenreRepository.findById(id).get();
+    }
+
+    public List<MusicGenre> filterMusicGenres(List<MusicGenre> musicGenres) {
+        for(MusicGenre musicGenre:musicGenres) {
+            for(Music music:musicGenre.getMusics()) {
+                music.setMusicGenres(Collections.emptyList());
+                music.setSingers(Collections.emptyList());
+                music.setUsers(Collections.emptyList());
+            }
+        }
+        return musicGenres;
     }
 
 }

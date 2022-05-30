@@ -3,19 +3,20 @@ package uet.myboot.modules.music.models;
 import org.springframework.web.util.UriUtils;
 import uet.myboot.modules.genre.models.MusicGenre;
 import uet.myboot.modules.singer.models.Singer;
+import uet.myboot.modules.user.models.User;
 import uet.myboot.parent.main.Main;
 
 import javax.persistence.*;
 import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 @Entity
 @Table(name = "music")
 public class Music {
+
     @Id
-    @Basic
+    @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int id;
 
     @Basic
@@ -30,12 +31,15 @@ public class Music {
     @Basic
     private String image;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany
     @JoinTable(
             name = "music_singer",
-            joinColumns = @JoinColumn(name = "music_id"),
-            inverseJoinColumns = @JoinColumn(name = "singer_id"))
+            joinColumns = @JoinColumn(name = "singer_id"),
+            inverseJoinColumns = @JoinColumn(name = "music_id"))
     List<Singer> singers;
+
+    @ManyToMany(mappedBy = "favourites", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    List<User> users;
 
     @Basic
     private int listens;
@@ -43,11 +47,11 @@ public class Music {
     @Basic
     private int likes;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany
     @JoinTable(
             name = "music_musicgenre",
-            joinColumns = @JoinColumn(name = "music_id"),
-            inverseJoinColumns = @JoinColumn(name = "music_genre_id"))
+            joinColumns = @JoinColumn(name = "music_genre_id"),
+            inverseJoinColumns = @JoinColumn(name = "music_id"))
     List<MusicGenre> musicGenres;
 
     public int getId() {
@@ -137,4 +141,11 @@ public class Music {
         this.musicGenres = musicGenres;
     }
 
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(final List<User> users) {
+        this.users = users;
+    }
 }

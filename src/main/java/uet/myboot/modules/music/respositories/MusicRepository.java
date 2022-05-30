@@ -6,4 +6,6 @@ import uet.myboot.modules.music.models.Music;
 
 @Repository
 public interface MusicRepository extends JpaRepository<Music, Integer> {
+
+    Music getMusicById(int id);
 }
