@@ -2,7 +2,6 @@ package com.example.appmusic.Fragment;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,7 +14,7 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.appmusic.API.DonationApi;
+import com.example.appmusic.API.MusicApi;
 import com.example.appmusic.Model.User;
 import com.example.appmusic.R;
 
@@ -44,8 +43,10 @@ public class RegisterFragment extends Fragment {
         backToLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), LoginFragment.class);
-                startActivity(intent);
+                LoginFragment nextFrag= new LoginFragment();
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.layout_user, nextFrag)
+                        .commit();
             }
         });
 
@@ -105,7 +106,7 @@ public class RegisterFragment extends Fragment {
         protected String doInBackground(Object... params) {
             String res = null;
             try {
-                res = DonationApi.register((String) params[0], (User) params[1]);
+                res = MusicApi.register((String) params[0], (User) params[1]);
             }
             catch(Exception e) {
                 Log.v("Music","ERROR : " + e);

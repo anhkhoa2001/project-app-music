@@ -14,6 +14,7 @@ import com.example.appmusic.Activity.Base;
 import com.example.appmusic.Fragment.HomeFragment;
 import com.example.appmusic.Fragment.LoginFragment;
 import com.example.appmusic.Fragment.SearchFragment;
+import com.example.appmusic.Fragment.UserFragment;
 
 import java.util.ArrayList;
 
@@ -36,7 +37,7 @@ public class MainViewPagerAdapter extends FragmentStateAdapter {
             case 1:
                 return new SearchFragment();
             case 2:
-                return new LoginFragment();
+                return new UserFragment();
             default:
                 return new HomeFragment();
         }

@@ -1,6 +1,5 @@
 package com.example.appmusic.Activity;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,9 +11,11 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 
-import com.example.appmusic.API.DonationApi;
+import com.example.appmusic.API.MusicApi;
+import com.example.appmusic.Adapter.AlbumAdapter;
 import com.example.appmusic.Adapter.SongListAdapter;
 import com.example.appmusic.Model.Music;
 import com.example.appmusic.R;
@@ -35,6 +36,7 @@ public class SongListActivity extends Base {
     private List<Music> songList = new ArrayList<>();
     private String name;
     private SongListAdapter songListAdapter;
+    private ImageView collapView;
 
     @Override
     public void onBackPressed() {
@@ -49,21 +51,22 @@ public class SongListActivity extends Base {
         setContentView(R.layout.activity_song_list);
         collapsingtoolbarLayout = findViewById(R.id.collapsing_toolbar);
         recyclerviewSongList = findViewById(R.id.recyclerView_SongList);
+        collapView = findViewById(R.id.collap_view);
 
         //set background
         Intent intent = getIntent();
         if (intent != null) {
             if (intent.hasExtra("Source")) {
                 String source = intent.getStringExtra("Source");
+                Log.v("Music", "collap source" + source);
                 // Truy Vấn DB với id
 
                 //source là link ảnh
                 //set source vào collapsingtoolbarLayout
+                new LoadImageURL(collapView).execute(source);
             }
         }
         getDataIntent(intent);
-        collapsingtoolbarLayout.setBackgroundResource(R.drawable.mot_phut_banner);
-
     }
 
     public void getDataIntent(Intent intent) {
@@ -99,7 +102,7 @@ public class SongListActivity extends Base {
         @Override
         protected List<Music> doInBackground(String... params) {
             try {
-                return (List<Music>) DonationApi.getAllMusicById((String) params[0],(String) params[1]);
+                return (List<Music>) MusicApi.getAllMusicById((String) params[0],(String) params[1]);
             }
             catch (Exception e) {
                 e.printStackTrace();

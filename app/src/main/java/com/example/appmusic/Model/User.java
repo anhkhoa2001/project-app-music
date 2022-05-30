@@ -1,5 +1,7 @@
 package com.example.appmusic.Model;
 
+import java.util.Set;
+
 public class User {
     private int id;
     private String username;
@@ -7,6 +9,7 @@ public class User {
     private String name;
     private String password;
     private String phone;
+    Set<Music> favourites;
 
     public User() {}
 
@@ -56,6 +59,14 @@ public class User {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public Set<Music> getFavourites() {
+        return favourites;
+    }
+
+    public void setFavourites(Set<Music> favourites) {
+        this.favourites = favourites;
     }
 
     public User(String username, String password) {

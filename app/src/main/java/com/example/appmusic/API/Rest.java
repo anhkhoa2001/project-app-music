@@ -14,7 +14,7 @@ public class Rest {
 	private static HttpURLConnection 	httpCon = null;
 	private static URL 					url;
 
-	private static final String hostURL_Tro = "http://192.168.2.105:8080";
+	private static final String hostURL_Tro = "http://172.20.10.7:8080";
 	private static final String hostURL_Nha = "http://192.168.1.70:8080";
 	private static final String LocalhostURL = "http://192.168.0.13:3000";
 	

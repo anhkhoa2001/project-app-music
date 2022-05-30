@@ -1,8 +1,9 @@
 package com.example.appmusic.Adapter;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,12 +11,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.appmusic.API.MusicApi;
+import com.example.appmusic.Activity.Base;
 import com.example.appmusic.Activity.PlayMusicActivity;
 import com.example.appmusic.Model.Music;
 import com.example.appmusic.R;
+import com.example.appmusic.result.EResponse;
 
 import java.util.List;
 
@@ -24,6 +29,7 @@ public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHo
     private List<Music> songList;
     private int id;
     private String type_id;
+    private int statusLike;
 
     public SongListAdapter(Context context, List<Music> songList, int id, String type_id) {
         this.context = context;
@@ -43,9 +49,17 @@ public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int i) {
         Music music = songList.get(i);
+        statusLike = getStatusLikeByUsername(music);
         holder.songSinger.setText(music.singersToString());
         holder.songName.setText(music.getName());
         holder.songIndex.setText(i + 1 + "");
+        holder.songLike.setImageResource(statusLike == 1
+                ? R.drawable.iconloved : R.drawable.iconlove);
+        holder.viewStatusLike = statusLike;
+    }
+
+    public int getStatusLikeByUsername(Music music) {
+        return music.getUserByUsername(Base.username) != null ? 1 : 0;
     }
 
     @Override
@@ -56,6 +70,7 @@ public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHo
     class ViewHolder extends RecyclerView.ViewHolder {
         TextView songIndex, songSinger, songName;
         ImageView songLike, songMyPlaylist;
+        int viewStatusLike;
         ViewHolder(@NonNull View itemView, int i) {
             super(itemView);
             songIndex = itemView.findViewById(R.id.song_index);
@@ -67,7 +82,14 @@ public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHo
             songLike.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    songLike.setImageResource(R.drawable.iconloved);
+                    if(Base.isLogged()) {
+                        new EventHandlerLike(songLike, viewStatusLike).execute("/user/like", String.valueOf(songList
+                                        .get(Integer.parseInt(songIndex.getText().toString()) - 1).getId()),
+                                Base.token, String.valueOf(viewStatusLike));
+                    } else {
+                        Toast.makeText(context, EResponse.FAILED.toString(), Toast.LENGTH_LONG).show();
+                    }
+
                 }
             });
 
@@ -104,5 +126,41 @@ public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHo
             array[i] = musics.get(i).getName() + "khoanamhet" + musics.get(i).getSource();
         }
         return array;
+    }
+
+    private class EventHandlerLike extends AsyncTask<String, Void, String> {
+        protected ProgressDialog dialog;
+        protected ImageView songLike;
+        protected int viewStatusLike;
+        public EventHandlerLike(ImageView imageView, int viewStatusLike){
+            this.songLike = imageView;
+            this.viewStatusLike = viewStatusLike;
+        }
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+                return (String) MusicApi.handlerLikeMusic((String) params[0],(String) params[1], (String) params[2], Integer.parseInt(params[3]));
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+
+            if(viewStatusLike == 0) {
+                songLike.setImageResource(R.drawable.iconloved);
+                Toast.makeText(context, EResponse.SUCCESS.toString(), Toast.LENGTH_LONG).show();
+            } else {
+                songLike.setImageResource(R.drawable.iconlove);
+                Toast.makeText(context, "UNLIKE" + EResponse.SUCCESS.toString(), Toast.LENGTH_LONG).show();
+            }
+        }
     }
 }

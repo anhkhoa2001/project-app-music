@@ -13,7 +13,7 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.List;
 
-public class DonationApi {
+public class MusicApi {
 
 	public static List<MusicGenre> getAllMusicGenre(String call) {
 		String json = Rest.get(call);
@@ -45,6 +45,13 @@ public class DonationApi {
 		Type collectionType = new TypeToken<List<Music>>(){}.getType();
 		List<Music> list = new Gson().fromJson(json, collectionType);
 		return list;
+	}
+
+	public static String handlerLikeMusic(String call, String id, String token, int status) {
+		String json = Rest.get(call + "?id=" + id + "&token=" + token + "&numberStatus=" + status);
+		Log.v("Music", "JSON RESULT : " + json);
+
+		return json;
 	}
 
 
@@ -88,5 +95,13 @@ public class DonationApi {
 		String json = new Gson().toJson(token, objType);
 
 		return Rest.post(call, json);
+	}
+
+	public static User getUserByToken(String call, String token) {
+		Type objType = new TypeToken<User>(){}.getType();
+		String json = Rest.post(call, token);
+		User userJson = new Gson().fromJson(json, objType);
+
+		return userJson;
 	}
 }

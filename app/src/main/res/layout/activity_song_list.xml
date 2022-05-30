@@ -11,39 +11,37 @@
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar_layout"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="350dp"
         android:fitsSystemWindows="true">
+
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:id="@+id/collapsing_toolbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
             app:expandedTitleGravity="center|bottom"
             app:expandedTitleMarginBottom="33dp"
-            android:background="@drawable/mot_phut_banner"
-            android:fitsSystemWindows="true"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
-            <View
+
+            <ImageView
+                android:id="@+id/collap_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:background="@drawable/custom_background_banner"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar_list"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:elevation="6dp"
-                app:layout_collapseMode="pin"
-                app:popupTheme="@style/Theme.AppCompat.Light"/>
+                android:scaleType="fitXY" />
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
+
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="776dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView_SongList"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
     </androidx.core.widget.NestedScrollView>
 
 

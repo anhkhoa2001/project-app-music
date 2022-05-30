@@ -20,7 +20,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.appmusic.API.DonationApi;
+import com.example.appmusic.API.MusicApi;
 import com.example.appmusic.Activity.SongListActivity;
 import com.example.appmusic.Model.MusicGenre;
 import com.example.appmusic.R;
@@ -111,7 +111,7 @@ public class PopularFragment extends Fragment {
 
         protected List<MusicGenre> doInBackground(String... params) {
             try {
-                return (List<MusicGenre>) DonationApi.getAllMusicGenre((String) params[0]);
+                return (List<MusicGenre>) MusicApi.getAllMusicGenre((String) params[0]);
             }
             catch (Exception e) {
                 e.printStackTrace();

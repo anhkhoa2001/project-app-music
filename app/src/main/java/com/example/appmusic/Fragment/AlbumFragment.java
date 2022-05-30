@@ -13,7 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.appmusic.API.DonationApi;
+import com.example.appmusic.API.MusicApi;
 import com.example.appmusic.Adapter.AlbumAdapter;
 import com.example.appmusic.Model.Singer;
 import com.example.appmusic.R;
@@ -55,7 +55,7 @@ public class AlbumFragment extends Fragment {
         @Override
         protected List<Singer> doInBackground(String... params) {
             try {
-                return (List<Singer>) DonationApi.getAllAlbum((String) params[0], (String) params[1]);
+                return (List<Singer>) MusicApi.getAllAlbum((String) params[0], (String) params[1]);
             }
             catch (Exception e) {
                 e.printStackTrace();

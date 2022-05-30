@@ -1,14 +1,11 @@
 package com.example.appmusic.Fragment;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
-import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -18,10 +15,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.appmusic.API.DonationApi;
+import com.example.appmusic.API.MusicApi;
 import com.example.appmusic.Adapter.BannerAdapter;
-import com.example.appmusic.Model.Banner;
-import com.example.appmusic.Model.Music;
 import com.example.appmusic.Model.MusicGenre;
 import com.example.appmusic.R;
 
@@ -69,7 +64,7 @@ public class BannerFragment extends Fragment {
         @Override
         protected List<MusicGenre> doInBackground(String... params) {
             try {
-                return (List<MusicGenre>) DonationApi.getAllMusicGenre((String) params[0]);
+                return (List<MusicGenre>) MusicApi.getAllMusicGenre((String) params[0]);
             }
             catch (Exception e) {
                 e.printStackTrace();

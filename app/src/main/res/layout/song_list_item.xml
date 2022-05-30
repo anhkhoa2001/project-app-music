@@ -53,6 +53,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="60dp"
             android:src="@drawable/iconsplaylist" />
+
         <ImageView
             android:id="@+id/song_like"
             android:layout_width="25dp"

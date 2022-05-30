@@ -15,12 +15,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.EditText;
-import android.widget.ListAdapter;
 
-import com.example.appmusic.API.DonationApi;
-import com.example.appmusic.Activity.SongListActivity;
+import com.example.appmusic.API.MusicApi;
 import com.example.appmusic.Adapter.SongListAdapter;
 import com.example.appmusic.Model.Music;
 import com.example.appmusic.R;
@@ -107,7 +104,7 @@ public class SearchFragment extends Fragment {
         @Override
         protected List<Music> doInBackground(String... params) {
             try {
-                return (List<Music>) DonationApi.getAllMusic((String) params[0]);
+                return (List<Music>) MusicApi.getAllMusic((String) params[0]);
             }
             catch (Exception e) {
                 e.printStackTrace();

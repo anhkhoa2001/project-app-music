@@ -11,16 +11,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.appmusic.API.DonationApi;
+import com.example.appmusic.API.MusicApi;
 import com.example.appmusic.Activity.Base;
 import com.example.appmusic.Activity.MainActivity;
 import com.example.appmusic.Model.User;
 import com.example.appmusic.R;
+import com.example.appmusic.result.EResponse;
 
 public class LoginFragment extends Fragment {
 
@@ -50,6 +51,7 @@ public class LoginFragment extends Fragment {
             public void onClick(View view) {
                 User user = new User(username.getText().toString(), password.getText().toString());
                 new InsertTask(getActivity()).execute("/login", user);
+                Base.username = user.getUsername();
             }
         });
 
@@ -58,7 +60,7 @@ public class LoginFragment extends Fragment {
             public void onClick(View view1) {
                 RegisterFragment nextFrag= new RegisterFragment();
                 getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.loginMainLayout, nextFrag)
+                        .replace(R.id.layout_user, nextFrag)
                         .commit();
             }
         });
@@ -93,7 +95,7 @@ public class LoginFragment extends Fragment {
         protected String doInBackground(Object... params) {
             String res = null;
             try {
-                res = DonationApi.login((String) params[0], (User) params[1]);
+                res = MusicApi.login((String) params[0], (User) params[1]);
             }
             catch(Exception e) {
                 Log.v("Music","ERROR : " + e);
@@ -107,13 +109,13 @@ public class LoginFragment extends Fragment {
             if (dialog.isShowing()) {
                 dialog.dismiss();
             }
-/*
-            Toast.makeText(context, result, Toast.LENGTH_LONG).show();*/
-            Log.v("Music", result);
-            if(!result.equals("ERROR!!!")) {
+
+            if(!result.equals(EResponse.FAILED.toString())) {
                 Base.token = result;
                 Intent intent = new Intent(context, MainActivity.class);
                 context.startActivity(intent);
+            } else {
+                Toast.makeText(context, EResponse.FAILED.toString(), Toast.LENGTH_LONG).show();
             }
         }
     }

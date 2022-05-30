@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class Base extends AppCompatActivity {
     public static String token = null;
+    public static String username = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -15,6 +16,7 @@ public class Base extends AppCompatActivity {
 
     public static boolean isLogged() {
         return token != null;
+        //true la da dang nhap
     }
 
    /* private class CheckTask extends AsyncTask<Object, Void, String> {

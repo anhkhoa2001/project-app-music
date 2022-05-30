@@ -179,11 +179,7 @@ public class PlayMusicActivity extends Base implements
         btnRepeat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(repeat) {
-                    repeat = false;
-                } else {
-                    repeat = true;
-                }
+                repeat = !repeat;
                 float deg = btnRepeat.getRotation() + 90F;
                 btnRepeat.animate().rotation(deg).setInterpolator(new AccelerateDecelerateInterpolator());
             }

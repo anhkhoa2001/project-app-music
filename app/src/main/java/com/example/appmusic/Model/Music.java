@@ -15,6 +15,7 @@ public class Music {
     private List<Singer> singers;
     private int listens;
     private int likes;
+    List<User> users;
 
     public String getName() {
         return name;
@@ -80,6 +81,14 @@ public class Music {
         this.id = id;
     }
 
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
+    }
+
     public Music() {
     }
 
@@ -89,6 +98,16 @@ public class Music {
             nameSingers.add(singer.getName());
         }
         return TextUtils.join(" ft ", nameSingers);
+    }
+
+    public User getUserByUsername(String username) {
+        User user = null;
+        for(User u : getUsers()) {
+            if(u.getUsername().equals(username)) {
+                user = u;
+            }
+        }
+        return user;
     }
 
 }
