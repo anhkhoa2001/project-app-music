@@ -3,46 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/ADMIN/Desktop/kho/javamobile/AppMusic/app/src/main/res/drawable/custom_background_banner.xml" value="0.1305" />
-        <entry key="..\:/Users/ADMIN/Desktop/kho/javamobile/AppMusic/app/src/main/res/layout/activity_logged.xml" value="0.3625" />
-        <entry key="..\:/Users/ADMIN/Desktop/kho/javamobile/AppMusic/app/src/main/res/layout/activity_main.xml" value="0.3365036231884058" />
-        <entry key="..\:/Users/ADMIN/Desktop/kho/javamobile/AppMusic/app/src/main/res/layout/activity_play_music.xml" value="0.3365036231884058" />
-        <entry key="..\:/Users/ADMIN/Desktop/kho/javamobile/AppMusic/app/src/main/res/layout/activity_song_list.xml" value="0.3365036231884058" />
-        <entry key="..\:/Users/ADMIN/Desktop/kho/javamobile/AppMusic/app/src/main/res/layout/album_item.xml" value="0.3365036231884058" />
-        <entry key="..\:/Users/ADMIN/Desktop/kho/javamobile/AppMusic/app/src/main/res/layout/content_logged.xml" value="0.3625" />
-        <entry key="..\:/Users/ADMIN/Desktop/kho/javamobile/AppMusic/app/src/main/res/layout/content_main.xml" value="0.3625" />
-        <entry key="..\:/Users/ADMIN/Desktop/kho/javamobile/AppMusic/app/src/main/res/layout/dong_banner.xml" value="0.3365036231884058" />
-        <entry key="..\:/Users/ADMIN/Desktop/kho/javamobile/AppMusic/app/src/main/res/layout/fragment_album.xml" value="0.3365036231884058" />
-        <entry key="..\:/Users/ADMIN/Desktop/kho/javamobile/AppMusic/app/src/main/res/layout/fragment_banner.xml" value="0.3365036231884058" />
-        <entry key="..\:/Users/ADMIN/Desktop/kho/javamobile/AppMusic/app/src/main/res/layout/fragment_first.xml" value="0.3625" />
-        <entry key="..\:/Users/ADMIN/Desktop/kho/javamobile/AppMusic/app/src/main/res/layout/fragment_home.xml" value="0.3365036231884058" />
-        <entry key="..\:/Users/ADMIN/Desktop/kho/javamobile/AppMusic/app/src/main/res/layout/fragment_login.xml" value="0.5" />
-        <entry key="..\:/Users/ADMIN/Desktop/kho/javamobile/AppMusic/app/src/main/res/layout/fragment_music_disc.xml" value="0.3365036231884058" />
-        <entry key="..\:/Users/ADMIN/Desktop/kho/javamobile/AppMusic/app/src/main/res/layout/fragment_play_list.xml" value="0.3365036231884058" />
-        <entry key="..\:/Users/ADMIN/Desktop/kho/javamobile/AppMusic/app/src/main/res/layout/fragment_registor.xml" value="0.3365036231884058" />
-        <entry key="..\:/Users/ADMIN/Desktop/kho/javamobile/AppMusic/app/src/main/res/layout/fragment_search.xml" value="0.3365036231884058" />
-        <entry key="..\:/Users/ADMIN/Desktop/kho/javamobile/AppMusic/app/src/main/res/layout/fragment_user.xml" value="0.3625" />
-        <entry key="..\:/Users/ADMIN/Desktop/kho/javamobile/AppMusic/app/src/main/res/layout/song_list_item.xml" value="0.1" />
-        <entry key="..\:/Users/Admin/AndroidStudioProjects/AppMusic/app/src/main/res/drawable/custom_background_banner.xml" value="0.244" />
-        <entry key="..\:/Users/Admin/AndroidStudioProjects/AppMusic/app/src/main/res/drawable/custom_background_play_nhac.xml" value="0.244" />
-        <entry key="..\:/Users/Admin/AndroidStudioProjects/AppMusic/app/src/main/res/drawable/custom_textview_so_luot_thich.xml" value="0.244" />
-        <entry key="..\:/Users/Admin/AndroidStudioProjects/AppMusic/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1395" />
-        <entry key="..\:/Users/Admin/AndroidStudioProjects/AppMusic/app/src/main/res/drawable/icon_home.xml" value="0.1385" />
-        <entry key="..\:/Users/Admin/AndroidStudioProjects/AppMusic/app/src/main/res/drawable/round_cormer_bottom.xml" value="0.194" />
-        <entry key="..\:/Users/Admin/AndroidStudioProjects/AppMusic/app/src/main/res/layout-v31/album_item.xml" value="0.2269021739130435" />
-        <entry key="..\:/Users/Admin/AndroidStudioProjects/AppMusic/app/src/main/res/layout/activity_main.xml" value="0.1" />
-        <entry key="..\:/Users/Admin/AndroidStudioProjects/AppMusic/app/src/main/res/layout/activity_play_music.xml" value="0.25" />
-        <entry key="..\:/Users/Admin/AndroidStudioProjects/AppMusic/app/src/main/res/layout/activity_song_list.xml" value="0.25" />
-        <entry key="..\:/Users/Admin/AndroidStudioProjects/AppMusic/app/src/main/res/layout/album_item.xml" value="0.25" />
-        <entry key="..\:/Users/Admin/AndroidStudioProjects/AppMusic/app/src/main/res/layout/dong_banner.xml" value="0.25" />
-        <entry key="..\:/Users/Admin/AndroidStudioProjects/AppMusic/app/src/main/res/layout/fragment_album.xml" value="0.25" />
-        <entry key="..\:/Users/Admin/AndroidStudioProjects/AppMusic/app/src/main/res/layout/fragment_banner.xml" value="0.25" />
-        <entry key="..\:/Users/Admin/AndroidStudioProjects/AppMusic/app/src/main/res/layout/fragment_home.xml" value="0.22826086956521738" />
-        <entry key="..\:/Users/Admin/AndroidStudioProjects/AppMusic/app/src/main/res/layout/fragment_music_disc.xml" value="0.25" />
-        <entry key="..\:/Users/Admin/AndroidStudioProjects/AppMusic/app/src/main/res/layout/fragment_play_list.xml" value="0.25" />
-        <entry key="..\:/Users/Admin/AndroidStudioProjects/AppMusic/app/src/main/res/layout/fragment_popular.xml" value="0.25" />
-        <entry key="..\:/Users/Admin/AndroidStudioProjects/AppMusic/app/src/main/res/layout/fragment_search.xml" value="0.22826086956521738" />
-        <entry key="..\:/Users/Admin/AndroidStudioProjects/AppMusic/app/src/main/res/layout/song_list_item.xml" value="0.25" />
+        <entry key="..\:/Users/ADMIN/Desktop/kho/javamobile/Donation50/app/src/main/res/layout/activity_main.xml" value="0.33967391304347827" />
+        <entry key="..\:/Users/ADMIN/Desktop/kho/javamobile/Donation50/app/src/main/res/layout/activity_report.xml" value="0.33" />
+        <entry key="..\:/Users/ADMIN/Desktop/kho/javamobile/Donation50/app/src/main/res/layout/content_donate.xml" value="0.33967391304347827" />
+        <entry key="..\:/Users/ADMIN/Desktop/kho/javamobile/Donation50/app/src/main/res/layout/fragment_first.xml" value="0.33967391304347827" />
+        <entry key="..\:/Users/ADMIN/Desktop/kho/javamobile/Donation50/app/src/main/res/layout/row_donate.xml" value="0.33967391304347827" />
+        <entry key="..\:/Users/ADMIN/Desktop/kho/javamobile/Donation50/app/src/main/res/menu/menu_donate.xml" value="0.3625" />
       </map>
     </option>
   </component>

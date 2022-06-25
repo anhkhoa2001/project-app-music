@@ -1,2 +1,0 @@
-Hệ điều hành là phần mềm hệ thống quản lý phần cứng máy tính, phần mềm 
-và cung cấp các dịch vụ chung cho các chương trình máy tính.
