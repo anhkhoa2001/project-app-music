@@ -1,202 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    app:layout_constraintBottom_toTopOf="@+id/progressBar"
-    app:layout_constraintEnd_toEndOf="@+id/donateTitle"
-    app:layout_constraintStart_toEndOf="@+id/donateTitle"
-    app:layout_constraintTop_toTopOf="@+id/progressBar"
-    tools:context=".activity.Donate">
+    android:orientation="vertical"
+    android:background="@color/app_background"
+    tools:context=".activities.MainActivity">
 
-    <TextView
-        android:id="@+id/donateTitle"
-        android:layout_width="280dp"
-        android:layout_height="54dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="47dp"
-        android:layout_marginEnd="118dp"
-        android:text="@string/donateTitle"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toStartOf="@+id/amountPicker"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/donateSubtitle"
-        android:layout_width="285dp"
-        android:layout_height="23dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="114dp"
-        android:layout_marginEnd="15dp"
-        android:text="@string/donateSubtitle"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/paymentMethod"
-        app:layout_constraintEnd_toStartOf="@+id/amountPicker"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/amountPicker" />
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/myViewPaper"
+        android:layout_width="match_parent"
+        android:layout_height="658dp" />
 
-    <RadioGroup
-        android:id="@+id/paymentMethod"
-        android:layout_width="wrap_content"
-        android:layout_height="98dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="152dp"
-        android:layout_marginEnd="173dp"
-        android:layout_marginBottom="481dp"
-        app:layout_constraintBottom_toBottomOf="@+id/amountPicker"
-        app:layout_constraintEnd_toStartOf="@+id/amountPicker"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/donateTitle">
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/myTabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="73dp"
+        android:background="@color/tab_layout"
+        app:tabIconTint="@color/tab_icon"
+        app:tabMode="fixed"
+        app:tabSelectedTextColor="@color/white"
+        app:tabTextColor="@color/tab_text" />
 
-        <RadioButton
-            android:id="@+id/direct"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/direct" />
+</LinearLayout>
 
-        <RadioButton
-            android:id="@+id/paypal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/paypal" />
-    </RadioGroup>
-
-    <NumberPicker
-        android:id="@+id/amountPicker"
-        android:layout_width="77dp"
-        android:layout_height="177dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="326dp"
-        android:layout_marginTop="150dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="402dp"
-        app:layout_constraintBottom_toBottomOf="@+id/progressBar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/paymentMethod"
-        app:layout_constraintTop_toTopOf="@+id/donateTitle" />
-
-    <Button
-        android:id="@+id/donateButton"
-        android:layout_width="107dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="68dp"
-        android:layout_marginEnd="236dp"
-        android:layout_marginBottom="111dp"
-        android:onClick="donateButtonPressed"
-        android:text="@string/donateButton"
-        app:layout_constraintBaseline_toBaselineOf="@+id/nextButton"
-        app:layout_constraintEnd_toStartOf="@+id/nextButton" />
-
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="379dp"
-        android:layout_height="40dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentBottom="true"
-        android:layout_centerInParent="true"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="341dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginBottom="350dp"
-        android:scaleY="1.5"
-        app:layout_constraintBottom_toTopOf="@+id/amount"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/nextButton"
-        android:layout_width="109dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="242dp"
-        android:layout_marginEnd="59dp"
-        android:layout_marginBottom="112dp"
-        android:width="200sp"
-        android:text="@string/nextButton"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <TextView
-        android:id="@+id/amount"
-        android:layout_width="70dp"
-        android:layout_height="22dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="26dp"
-        android:layout_marginEnd="44dp"
-        android:layout_marginBottom="253dp"
-        android:text="@string/amount"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/paymentAmount"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/progressBar" />
-
-    <EditText
-        android:id="@+id/paymentAmount"
-        android:layout_width="288dp"
-        android:layout_height="97dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="389dp"
-        android:layout_marginEnd="9dp"
-        android:layout_marginBottom="245dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/amount"
-        app:layout_constraintTop_toTopOf="@+id/amountPicker" />
-
-    <TextView
-        android:id="@+id/totalSoFar"
-        android:layout_width="162dp"
-        android:layout_height="35dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="67dp"
-        android:layout_marginTop="39dp"
-        android:layout_marginBottom="172dp"
-        android:text="@string/totalSoFar"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/paymentAmount" />
-
-    <TextView
-        android:id="@+id/total"
-        android:layout_width="93dp"
-        android:layout_height="30dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="240dp"
-        android:layout_marginTop="39dp"
-        android:layout_marginEnd="93dp"
-        android:layout_marginBottom="177dp"
-        android:text="@string/total"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/paymentAmount" />
-
-</RelativeLayout>

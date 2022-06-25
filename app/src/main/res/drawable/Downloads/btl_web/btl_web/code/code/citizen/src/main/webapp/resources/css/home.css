@@ -1,0 +1,2231 @@
+:root {
+    --color-menu: #9097a7;
+    --color-bg: #2c313e;
+    --color-bg-menu: #343b4a; 
+    --font-family: Arial, Helvetica, sans-serif;
+    --color-menu-hover: #00acc1;
+    --width-menu: 240px;
+    font-size: 14px;
+    --height-header: 80px;
+    --color-title: #dee2e6;
+    --height-screen: 897px;
+    --color-border: #303644;
+    --width-form: 1200px;
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html {
+    font-family: Arial, Helvetica, sans-serif;
+}
+a {
+    text-decoration: none;
+    color: white;
+}
+p {
+    color: var(--color-menu);
+}
+
+/* =====================
+HEADER
+========================== */
+#menu {
+    width: var(--width-menu);
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    background-color: var(--color-bg-menu);
+}
+#menu .logo {
+    margin: 36px 0px;
+    text-align: center;
+}
+#menu .logo a {
+    text-transform: uppercase;
+    font-size: 2rem;
+    letter-spacing: 4px;
+}
+#menu .navigation {
+    margin-top: 24px;
+}
+#menu .navigation li {
+    text-align: center;
+    margin: 0px 20px;
+    font-size: 1rem;
+    color: var(--color-menu);
+    list-style: none;
+}
+.navigation li span {
+    display: flex;
+    cursor: pointer;
+    padding: 12px;
+    position: relative;
+}
+.navigation li span.open {
+    color: var(--color-menu-hover);
+}
+.navigation span i {
+    margin-right: 16px;
+}
+.navigation span i.expand {
+    position: absolute;
+    right: 6px;
+    top: 14px;
+    font-size: 0.8rem;
+}
+.navigation span i.expand.rotate {
+    transform: rotate(90deg);
+    transition: all 0.4s;
+}
+.navigation li span:hover {
+    color: var(--color-menu-hover);
+    transition: all 0.4s;
+}
+#menu .navigation .drop_input {
+    display: none;
+}
+#menu .navigation .drop_input.open {
+    display: block;
+}
+#menu .navigation .drop_input li { 
+    text-align: left;
+    margin-left: 36px;
+    padding: 8px;
+    cursor: pointer;
+}
+#menu .navigation .drop_input li.open {
+    color: var(--color-menu-hover);
+}
+#menu .navigation .drop_input li:hover {
+    color: var(--color-menu-hover);
+    transition: all 0.4s;
+}
+
+#container .header > div button {
+
+}
+
+/* =====================
+CONTAINER
+===================== */
+#container {
+    margin-left: var(--width-menu);
+}
+#container .header {
+    background-color: #303644;
+    position: fixed;
+    left: var(--width-menu);
+    right: 0;
+    top: 0;
+    display: flex;
+    justify-content: right;
+    padding: 16px 0px;
+    z-index: 100;
+}
+.header .notification {
+    position: relative;
+    top: 4px;
+    margin: 0px 24px;
+    cursor: pointer;
+}
+.header .notification i {
+    color: var(--color-menu);
+    font-size: 2.4rem;
+}
+.header .count {
+    background-color: red;
+    color: white;
+    font-size: 0.8rem;
+    display: block;
+    position: absolute;
+    text-align: center;
+    height: 12px;
+    width: 12px;
+    border-radius: 50%;
+    font-weight: 700;
+    top: 0;
+    right: 0;
+}
+.header .account {
+    display: flex;
+    margin: 0px 54px 0px 12px;
+    cursor: pointer;
+}
+.header .account img {
+    max-height: 40px;
+    max-width: 40px;
+    border-radius: 50%;
+    margin-right: 16px;
+}
+.header .account p {
+    line-height: 40px;
+}
+.header .account i {
+    margin-left: 8px;
+}
+.header .account:hover > p{
+    text-decoration: underline;
+}
+.header .drop_account {
+    position: absolute;
+    top: 72px;
+    width: 160px;
+    background-color: var(--color-bg-menu);
+    right: 36px;
+    padding-bottom: 12px;
+    display: none;
+}
+.header .drop_account.open {
+    display: block;
+}
+.header .drop_account a {
+    padding: 0px 12px;
+    cursor: pointer;
+    color: var(--color-menu);
+    display: block;
+    width: 100%;
+}
+.header .drop_account p:first-child {
+    font-size: 0.8rem;
+    padding: 16px 0px;
+    margin-left: 12px;
+}
+.header .drop_account .hover {
+    line-height: 32px;
+}
+.header .drop_account .hover:hover {
+    background-color: #303644;
+    color: #e1e9ee;
+}
+.drop_account a i {
+    margin-right: 12px;
+}
+.header .drop_notification {
+    position: absolute;
+    top: 54px;
+    width: 320px;
+    background-color: var(--color-bg-menu);
+    right: 197px;
+    padding: 20px 16px;
+    display: none;
+}
+.header .drop_notification.open,
+.header .drop_account.open {
+    display: block;
+}
+.header .drop_account a,
+.header .drop_notification a {
+    padding: 0px 12px;
+    cursor: pointer;
+    color: var(--color-menu);
+    display: block;
+    width: 100%;
+}
+.header .drop_notification a {
+    margin-bottom: 8px;
+}
+.header .drop_notification p {
+    font-size: 1.1rem;
+    padding: 8px 0px;
+    margin-left: 12px;
+    color: var(--color-title);
+}
+#container .header > div > button {
+    background-color: #00acc1;
+    color: var(--color-title);
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    border-radius: 2px;
+    padding: 8px 12px;
+    position: absolute;
+    top: 50%;
+    left: 24px;
+    transform: translate(0, -50%);
+}
+
+/* ===================
+HOME
+======================== */
+#container .home,
+#container .input_general,
+#container .input_file,
+#container .view,
+#container .person_info,
+#container .info_model {
+    background-color: var(--color-bg);
+    margin-top: 72px;
+    padding: 12px 16px;
+    display: none;
+    position: relative;
+    min-height: var(--height-screen);
+    padding-bottom: 100px;
+}
+#container .home.open,
+#container .input_general.open,
+#container .view.open,
+#container .person_info.open,
+#container .input_file.open,
+#container .info_model.open {
+    display: block;
+}
+.home .home_header,
+.input_general .input_header,
+.view .view_header,
+.person_info .info_header,
+.info_model .model_header {
+    display: flex;
+    justify-content: space-between;
+    padding: 16px 0px;
+}
+.home_header p,
+.input_header p,
+.view_header p,
+.info_header p,
+.model_header p {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--color-title);
+    letter-spacing: 1px;
+}
+.home_header span,
+.input_header span,
+.view_header span,
+.info_header span,
+.model_header span {
+    color: var(--color-menu);
+    line-height: 23px;
+}
+.home_header span i,
+.input_header span i,
+.view_header span i,
+.info_header span i,
+.model_header span i {
+    margin: 0px 12px;
+    font-size: 0.8rem;
+}
+.home .home_recent,
+.home .home_statistical,
+.input_general .input_content,
+.view .view_content,
+.person_info .info_list {
+    border: 2px solid var(--color-border);
+    padding: 24px;
+    margin: 16px 0px;
+}
+.home .home_recent p {
+    color: var(--color-title);
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-bottom: 12px;
+}
+.home_recent table,
+.view_content table,
+.info_list table {
+    width: 100%;
+    color: var(--color-title);
+    border-collapse: collapse;
+    margin: 24px 0px;
+}
+.home_recent table th,
+.home_recent table td,
+.view_content table th,
+.view_content table td,
+.info_list table th,
+.info_list table td {
+    border-top: 1px solid var(--color-border);
+    padding: 24px 12px;
+}
+.home_recent table tbody tr:last-child,
+.info_list table tbody tr:last-child {
+    border-bottom: 1px solid var(--color-border);
+}
+.home_recent table th {
+    text-align: left;
+}
+.home_recent tbody tr:hover,
+.view_content tbody tr:hover {
+    background-color: #303644;
+}
+.home_recent table .info {
+    display: flex;
+    flex-wrap: wrap;
+}
+.home_recent table img {
+    max-width: 60px;
+    max-height: 60px;
+    border-radius: 50%;
+}
+.home_recent .info span,
+.info_list .info span{
+    margin-left: 16px;
+    margin-bottom: 8px;
+    margin-top: 12px;
+}
+.home_recent .info span p,
+.info_list .info span p{
+    font-size: 0.9rem;
+    cursor: pointer;
+    color: var(--color-menu);
+    font-weight: bold;
+    margin-bottom: 12px;
+}
+.home_recent .info span p:first-child:hover,
+.info_list .info span p:first-child:hover {
+    color: var(--color-title);
+}
+.view_content p {
+    color: var(--color-title);
+}
+.view_content .action div,
+.info_list .action div {
+    background-color: var(--color-border);
+    display: inline-block;
+    padding: 8px 12px;
+    border-radius: 3px;
+    cursor: pointer;
+    position: relative;
+}
+.view_content .action div:hover,
+.info_list .action div:hover {
+    background-color: var(--color-bg-menu);
+}
+.view_content .action div ul,
+.info_list .action div ul {
+    display: none;
+    list-style: none;
+    position: absolute;
+    top: 32px;
+    right: 0;
+    width: 160px;
+    z-index: 2;
+    background-color: var(--color-bg);
+}
+.view_content .action ul li,
+.info_list .action ul li {
+    padding: 8px 12px;
+}
+.view_content .action a,
+.info_list .action a {
+    color: var(--color-menu);
+}
+.view_content .action a i,
+.info_list .action a i {
+    margin-right: 8px;
+}
+.view_content .action ul.open,
+.info_list .action ul.open {
+    display: block;
+}
+.view_content .action ul li:hover,
+.info_list .action ul li:hover {
+    background-color: var(--color-bg-menu);
+}
+.view_content .action ul li:hover a,
+.info_list .action ul li:hover a {
+    color: var(--color-title);
+}
+.home .home_footer,
+.input_general .input_footer,
+.view .view_footer,
+.person_info .info_footer,
+.info_model .model_footer {
+    display: flex;
+    justify-content: space-between;
+    padding: 24px 16px;
+    background-color: var(--color-border);
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
+}
+.home_footer ul,
+.input_footer ul,
+.view_footer ul,
+.info_footer ul,
+.model_footer ul {
+    display: flex;
+    justify-content: space-evenly;
+    flex-basis: 25%;
+}
+.home_footer ul li,
+.input_footer ul li,
+.view_footer ul li,
+.info_footer ul li,
+.model_footer ul li {
+    list-style: none;
+}
+.home_footer ul li a,
+.input_footer ul li a,
+.view_footer ul li a,
+.info_footer ul li a,
+.model_footer ul li a {
+    color: var(--color-menu);
+}
+/*
+.input_general .input_content {
+    color: var(--color-menu);
+    border: none;
+}
+.input_content span {
+    color: red;
+}
+.input_content .input_content_grid {
+    max-width: var(--width-form);
+    margin-left: auto;
+    margin-right: auto;
+    padding: 80px;
+}
+.input_content h1 {
+    text-align: center;
+    color: var(--color-title);
+    margin: 32px 0px;
+    flex-basis: 100%;
+}
+.input_content > div {
+    display: flex;
+    flex-wrap: wrap;
+}
+.input_content > div > div {
+    flex-basis: 100%;
+    display: flex;
+    margin: 8px 0px;
+}
+.input_content > div > div > label {
+    flex-basis: 15%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.input_content > div input[type="text"],
+.input_content > div input[type="date"] {
+    width: 100%;
+    height: 40px;
+    font-size: 1rem;
+    padding: 0.4rem 0.6rem;
+    color: #adb5bd;
+    background-color: var(--color-border);
+    border: 1px solid #343a4a;
+    border-radius: .2rem;
+    flex-basis: 85%;
+}
+.input_content div input:focus {
+    outline: none;
+}
+.input_content div div {
+    padding: 6px 0px;
+    width: 100%;
+    flex-wrap: wrap;
+}
+.input_content div div label {
+    margin-right: 32px;
+}
+.input_content > div button {
+    background-color: #00acc1;
+    border-color: #00acc1;
+    color: var(--color-title);
+    font-weight: bold;
+    padding: 10px 24px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin: 36px 0px 12px 0px;
+    border-radius: 2px;
+}
+.input_content > div button:focus {
+    outline: none;
+    box-shadow: 0 0 0 0.15rem rgb(38 184 202 / 50);
+}
+.input_content > div button:not(:hover) {
+    box-shadow: none;
+}
+.input_content > div button:hover {
+    color: #fff;
+    background-color: #008a9b;
+    border-color: #007f8e;
+}
+.input_content > div .submit {
+    display: block;
+    width: 100%;
+    text-align: center;
+}
+.input_content .address {
+    flex-wrap: wrap;
+}
+.input_content .address .title {
+    flex-basis: 100%;
+    flex-wrap: wrap;
+}
+.input_content .address h2 {
+    flex-basis: 100%;
+    font-size: 1rem;
+    font-weight: 500;
+}
+.input_content .address hr {
+    height: 0.5px;
+    margin-top: 6px;
+    width: 80px;
+    border: none;
+    background-color: white;
+}
+.input_content .address div {
+    flex-basis: 33.333333%;
+    display: flex;
+}
+.input_content .address div label,
+.input_content .eej div label {
+    flex-basis: 46%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.input_content .address div input {
+    flex-basis: 54%;
+}
+.input_content .address .postcode input,
+.input_content .address .village input,
+.input_content .address .district input {
+    margin-right: 24px;
+}
+.input_content .address .village label,
+.input_content .address .commune label,
+.input_content .address .city label {
+    margin-right: 0px;
+}
+.input_content .address .district,
+.input_content .address .city {
+    margin-top: 16px;
+}
+.input_content .address .postcode select {
+    border: 2px solid var(--color-border);
+    background-color: var(--color-bg);
+    color: #adb5bd;
+    padding: 4px 36px 4px 4px;
+    flex-basis: 54%;
+    margin-right: 24px;
+}
+.input_content .address .postcode select:focus {
+    outline: none;
+}
+*/
+.input_general .input_content {
+    color: var(--color-menu);
+    border: none;
+}
+.input_content .input_content_grid {
+    max-width: var(--width-form);
+    margin-left: auto;
+    margin-right: auto;
+    padding: 80px;
+}
+.input_content h1 {
+    text-align: center;
+    color: var(--color-title);
+    margin: 32px 0px;
+    flex-basis: 100%;
+}
+
+.input_content {
+    display: flex;
+    flex-wrap: wrap;
+}
+.input_content > div {
+    display: flex;
+    margin: 8px 0px;
+    flex-wrap: wrap;
+}
+
+.input_content > div > label {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-basis: 12%;
+}
+
+.input_content > div > span {
+    position: relative;
+    top: 4px;
+}
+
+.input_content .sex {
+    display: flex;
+}
+
+.input_content span {
+    color: red;
+    flex-wrap: wrap;
+    flex-direction: column;
+    flex-basis: 100%;
+    margin-left: 15%;
+    margin-top: 6px;
+}
+
+.input_content .sex > label {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-basis: 12%;
+}
+
+.input_content .sex div {
+    flex-basis: 75%;
+}
+
+.input_content > div > input {
+    width: 100%;
+    height: 40px;
+    font-size: 1rem;
+    padding: 0.4rem 0.6rem;
+    color: #adb5bd;
+    background-color: var(--color-border);
+    border: 1px solid #343a4a;
+    border-radius: .2rem;
+}
+
+.input_content > div > div > label {
+    flex-basis: 12%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+}
+
+.input_content > div > div {
+    flex-basis: 100%;
+    display: flex;
+    margin: 8px 0px;
+    flex-wrap: wrap;
+}
+
+.input_content > div input[type="text"],
+.input_content > div input[type="date"] {
+    width: 100%;
+    height: 40px;
+    font-size: 1rem;
+    padding: 0.4rem 0.6rem;
+    color: #adb5bd;
+    background-color: var(--color-border);
+    border: 1px solid #343a4a;
+    border-radius: .2rem;
+    flex-basis: 85%;
+}
+.input_content div input:focus {
+    outline: none;
+}
+.input_content div div {
+    padding: 6px 0px;
+    width: 100%;
+}
+.input_content > div button {
+    background-color: #00acc1;
+    border-color: #00acc1;
+    color: var(--color-title);
+    font-weight: bold;
+    padding: 10px 24px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin: 36px 0px 12px 0px;
+    border-radius: 2px;
+}
+.input_content > div button:focus {
+    outline: none;
+    box-shadow: 0 0 0 0.15rem rgb(38 184 202 / 50);
+}
+.input_content > div button:not(:hover) {
+    box-shadow: none;
+}
+.input_content > div button:hover {
+    color: #fff;
+    background-color: #008a9b;
+    border-color: #007f8e;
+}
+.input_content > div .submit {
+    display: block;
+    width: 100%;
+    text-align: center;
+}
+.input_content > div span {
+    flex-basis: 100%;
+    margin-left: 12%;
+    margin-top: 8px;
+}
+.input_content .address {
+    flex-wrap: wrap;
+}
+.input_content .address .title {
+    flex-basis: 100%;
+    flex-wrap: wrap;
+}
+.input_content .address h2 {
+    flex-basis: 100%;
+    font-size: 1rem;
+    font-weight: 500;
+}
+.input_content .address hr {
+    height: 0.5px;
+    margin-top: 6px;
+    width: 80px;
+    border: none;
+    background-color: white;
+}
+.input_content .address div {
+    flex-basis: 33.333333%;
+    display: flex;
+}
+.input_content .address div label,
+.input_content .eej div label {
+    flex-basis: 36%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.input_content .address div input {
+    flex-basis: 54%;
+}
+.input_content .address .postcode input,
+.input_content .address .village input,
+.input_content .address .district input {
+    margin-right: 24px;
+}
+.input_content .address .village label,
+.input_content .address .commune label,
+.input_content .address .city label {
+    margin-right: 0px;
+}
+.input_content .address .district,
+.input_content .address .city {
+    margin-top: 16px;
+}
+.input_content .address .postcode select {
+    border: 2px solid var(--color-border);
+    background-color: var(--color-bg);
+    color: #adb5bd;
+    padding: 4px 36px 4px 4px;
+    flex-basis: 54%;
+    margin-right: 24px;
+}
+.input_content .address .postcode select:focus {
+    outline: none;
+}
+.input_content .gender div {
+    width: auto;
+}
+
+.view_content .content_top,
+.info_list .content_top {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.content_top .content_select {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+}
+.content_top .content_select .search_select {
+    flex: 1;
+    text-align: right;
+}
+.search_select .select {
+    position: relative;
+    display: inline-block;
+}
+.search_select .select > span {
+    color: var(--color-title);
+    display: inline-block;
+    padding: 12px 20px;
+    border-radius: 4px;
+    border: 1px solid var(--color-border);
+    cursor: pointer;
+    margin: 0px 24px;
+}
+.search_select .select span > i{
+    margin-left: 12px;
+}
+.search_select .select span:hover {
+    background-color: var(--color-bg-menu);
+}
+.search_select ul {
+    display: none;
+    position: absolute;
+    top: 40px;
+    padding: 12px 16px;
+    right: 24px;
+    background-color: var(--color-bg-menu);
+    z-index: 1;
+    width: 600px;
+}
+.search_select ul.open {
+    display: block;
+}
+.search_select ul li {
+    list-style: none;
+    float: left;
+    margin: 8px 12px;
+    color: var(--color-menu);
+}
+.search_select ul li input {
+    margin-right: 12px;
+    cursor: pointer;
+}
+.search_select ul li label {
+    font-weight: 500;
+    cursor: pointer;
+}
+.search_select ul li.submit {
+    width: 100%;
+    text-align: center;
+}
+.search_select ul button {
+    padding: 8px 16px;
+    background-color: #00acc1;
+    border-color: #00acc1;
+    color: var(--color-title);
+    font-weight: bold;
+    padding: 10px 24px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin: 36px 0px 12px 0px;
+    border-radius: 2px;
+}
+.search_select ul button:hover {
+    color: #fff;
+    background-color: #008a9b;
+    border-color: #007f8e;
+}
+.search_select ul li label {
+    padding: 0;
+}
+.content_top label {
+    font-weight: bold;
+    color: #adb5bd;
+    margin-right: 12px;
+    padding: 28px 0px;
+}
+.content_top select {
+    border: 2px solid var(--color-border);
+    background-color: var(--color-bg);
+    color: #adb5bd;
+    padding: 4px 36px 4px 4px;
+}
+.content_top select:focus {
+    outline: none;
+}
+.content_top .search {
+    text-align: right;
+}
+.content_top .search input {
+    height: 32px;
+    font-size: 1rem;
+    padding: 0.4rem 0.6rem;
+    color: #adb5bd;
+    background-color: var(--color-border);
+    border: 1px solid #343a4a;
+    border-radius: .2rem;
+    width: 280px;
+}
+.content_top .search_select select {
+    margin-right: 24px;
+    width: 160px;
+}
+.content_top .search input:focus {
+    outline: none;
+}
+.view_content table th,
+.info_list table th {
+    position: relative;
+    text-align: left;
+}
+.view_content table th span,
+.info_list table th span {
+    position: absolute;
+    right: 36px;
+    cursor: pointer;
+    font-weight: 100;
+}
+.view_content table tr td:first-child,
+.view_content table tr th:first-child {
+    width: 10%;
+}
+.view_content .content_bot,
+.info_list .content_bot {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+.content_bot .paging {
+    display: flex;
+    list-style: none;
+}
+.content_bot .paging .btn_page {
+    background-color: var(--color-bg);
+    border: none;
+    height: 32px;
+    width: 32px;
+    cursor: pointer;
+    border-radius: 50%;
+    color: #f1f5f7;
+    font-size: 1rem;
+    display: block;
+    position: relative;
+}
+.content_bot .paging .btn_page_middle {
+    color: #f1f5f7;
+    font-size: 1.6rem;
+    margin-left: 12px;
+    margin-right: 12px;
+}
+.paging .btn_page span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: block;
+    transform: translate(-50%, -50%);
+}
+.content_bot .paging .btn_page:hover {
+    background-color: var(--color-bg-menu);
+    color: var(--color-title);
+}
+.paging .btn_page.active {
+    background-color: #00acc1;
+}
+.paging .btn_page.active:hover {
+    background-color: #00acc1;
+}
+.info_list table tr th:first-child {
+    width: 8%;
+}
+.person_info table tr .info {
+    display: flex;
+}
+.person_info table img {
+    max-width: 60px;
+    max-height: 60px;
+    border-radius: 50%;
+    margin-right: 12px;
+}
+.person_info table .info_list_address p,
+.view  table .view_password p{
+    width: 300px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    color: var(--color-title);
+}
+.view  table .view_password p {
+    width: 120px;
+}
+.info_list thead th span i.open {
+    color: gray;
+}
+
+/* ===================
+MODEL
+======================= */
+.info_model .model_content {
+    background-color: var(--color-bg);
+    max-width: 1200px;
+    position: relative;
+    padding: 80px 80px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.info_model .model_content h1 {
+    text-align: center;
+    margin: 100px 24px 48px 24px;
+    color: var(--color-title);
+}
+.info_model .model_content p.title {
+    text-align: center;
+    font-style: italic;
+    font-size: 1rem;
+    margin-bottom: 24px
+}
+.info_model .model_content p {
+    font-size: 0.9rem;
+    margin: 4px;
+}
+.info_model .model_content div {
+    display: flex;
+    margin: 24px 0px;
+}
+.info_model .model_content div label {
+    flex-basis: 20%;
+    color: var(--color-menu);
+    padding: 12px 0px;
+}
+.info_model .model_content div input {
+    width: 100%;
+    height: 40px;
+    font-size: 1rem;
+    padding: 0.4rem 1rem;
+    color: #adb5bd;
+    background-color: var(--color-border);
+    border: 1px solid #343a4a;
+}
+.info_model .model_content div input:focus {
+    outline: none;
+}
+.info_model .model_content div.attribute {
+    display: flex;
+    justify-content: right;
+    margin-top: 72px;
+}
+.info_model .model_content img {
+    max-height: 200px;
+    max-width: 120px;
+    position: absolute;
+    right: 80px;
+    top: 120px;
+    cursor: pointer;
+}
+.info_model .model_content .attribute button {
+    background-color: #f1556c;
+    border: none;
+    cursor: pointer;
+    color: var(--color-title);
+    font-size: 1rem;
+    display: block;
+    padding: 12px 16px;
+    margin-right: 12px;
+    font-weight: bold;
+    border-radius: 2px;
+}
+.attribute button i {
+    margin-left: 8px;
+}
+.model_content .attribute button:hover {
+    background-color: #ee324d;
+    color: white;
+}
+
+
+/*========================
+fix diagram Home
+==========================*/
+.home_statistical >div:first-child{
+    display: flex;
+    width: 100%;
+    height: 250px;
+}
+.home_statistical img{
+    display: none;
+}
+.left_diagram{
+    flex: 6.7;
+    margin-right: 15px;
+}
+.right_diagram{
+    flex: 3.3;
+}
+.left_diagram, .right_diagram{
+    border: solid 1px var(--color-border);
+    border-radius: 3px;
+}
+
+
+/* --------------------------Fix------------------------------  */
+.view_content .action li{
+    color: var(--color-menu);
+}
+
+.view_content .action li i {
+    margin-right: 8px;
+}
+.view_content .action ul li:hover{
+    color: var(--color-title);
+}
+.person_info table .info_list_address p {
+    width: 290px;
+}
+#menu{
+    z-index: 2001;
+    /* transition: all linear 0.25s; */
+}
+/* #container, #container .header{
+    transition: all linear 0.25s;
+} */
+.home_footer ul li,
+.input_footer ul li,
+.view_footer ul li,
+.info_footer ul li,
+.model_footer ul li{
+    margin-left: 10px;
+}
+.person_info table tr .info{
+    flex-wrap: wrap;
+}
+.content_top .search input{
+    margin-top: 7px;
+}
+.add_user{
+    margin-left: 250px;
+    padding: 8px 0px;
+}
+.add_user button {
+    background-color: var(--color-border);
+    border: 1px solid #343a4a;
+    color: #adb5bd;
+    font-size: 15px;
+    width: 160px;
+    cursor: pointer;
+    padding: 6px;
+}
+.add_user button i{
+    color: var(--color-menu-hover);
+    font-size: 14px;
+    margin-right: 5px;
+}
+.add_user .add_user_model {
+    background-color: rgba(0, 0, 0, 0.4);
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 2002;
+    display: none;
+}
+.add_user .add_user_detail{
+    background-color: var(--color-bg-menu);
+    z-index: 2003;
+    flex-direction: column;
+    padding: 32px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+}
+.add_user_detail h2{
+    margin: 30px 0px;
+    text-align: center;
+    color: white;
+}
+.add_user_detail p {
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 15px;
+}
+.add_user_detail div{
+    width: 100%;
+    display: flex;
+    padding: 8px;
+}
+.add_user_detail div label {
+    flex-basis: 30%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0px;
+}
+.add_user_detail div input{
+    flex-basis: 70%;
+    width: 100%;
+    height: 32px;
+    font-size: 1rem;
+    padding: 0.4rem 0.6rem;
+    color: white;
+    background-color: rgb(76, 87, 99);
+    outline: none;
+    border: 1px solid #343a4a;
+    border-radius: 0.2rem
+}
+.add_user .submit {
+    justify-content: center;
+}
+.add_user .submit input{
+    background-color: #00acc1;
+    color: var(--color-title);
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    border-radius: 2px;
+    margin-top: 32px;
+    margin-bottom: 32px;
+    flex-basis: 15%;
+}
+.add_user_detail button{
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    top: 5px;
+    background: transparent;
+    right: 5px;
+}
+.add_user_detail button i{
+    font-size: 1.5rem;
+}
+/*=========================
+Responsive Home
+===========================*/
+
+/* icon menu */
+label .fa-bars{
+    position:absolute;
+    top: 20px;
+    left: 20px;
+    color: var(--color-menu);
+    font-size: 2rem;
+    display: none;
+    cursor: pointer;
+}
+/* Open-Close Menu */
+div#menu.toggle_menu{
+    left: 0px;
+}
+
+/* --------------------------------Detail, Grant, Edit User ---------------------*/
+.detail, .grant, .edit {
+    border: 2px solid var(--color-border);
+}
+.view_content tbody .detail:hover,
+.view_content tbody .grant:hover,
+.view_content tbody .edit:hover{
+    background-color: var(--color-bg);
+}
+.detail td, .grant td, .edit td{
+    position: relative;
+}
+.detail h3, .grant h3, .edit h3{
+    text-align: center;
+    margin-bottom: 10px;
+}
+.detail_info, .grant_info, .edit_info{
+    display: flex;
+}
+.detail .left,
+.grant .left,
+.edit .left{
+    margin-left: 15px;
+    flex: 30%;
+}
+.detail_info .left h4,
+.grant_info .left h4,
+.edit_info .left h4{
+    position: absolute;
+    background-color: #f1f5f7;
+    color: #2c313e;
+    width: 100px;
+    height: 30px;
+    top:20px;
+    left:0px;
+    text-align: center;
+    font-size: 18px;
+    line-height: 30px;
+    border-radius: 0 3px 3px 0;
+}
+.detail_info .left p,
+.grant_info .left p,
+.edit_info .left p{
+    color: var(--color-menu);
+    margin-top: 10px;
+}
+.detail_info .left .code,
+.grant_info .left .code,
+.edit_info .left .code{
+    color: #f1f5f7;
+    font-weight: bold;
+    font-size: 15px;
+}
+.detail_info .left .static,
+.grant_info .left .static,
+.edit_info .left .static{
+    color: var(--color-menu-hover);
+}
+.detail_info .bottom h5,
+.grant_info .bottom h5,
+.edit_info .bottom h5{
+    font-size: 15px;
+    margin-top:30px;
+}
+.detail .right,
+.grant .right,
+.edit .right {
+    margin: 20px 0 20px 100px;
+    width: 100%;
+}
+.detail .right div,
+.grant .right div,
+.edit .right div{
+    display: flex;
+    margin-top: 15px;
+    color: var(--color-menu);
+}
+.detail .right div label,
+.grant .right div label,
+.edit .right div label {
+    flex-basis:15%;
+    line-height: 35px;
+}
+.detail .right div input,
+.grant .right div input,
+.edit .right div input{
+    width: 70%;
+    height: 35px;
+    font-size: 1rem;
+    padding: 0.4rem 1rem;
+    color: #adb5bd;
+    background-color: var(--color-border);
+    border: 1px solid #343a4a;
+    outline: none;
+}
+
+/* Cấp quyền */
+.grant .right .submit_grant input,
+.edit .right .submit_edit input,
+.add_user_detail >input{
+    width: 100px;
+    background-color: #00acc1;
+    color: var(--color-title);
+    font-weight: bold;
+    padding: 10px 24px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin: 36px 0px 10px 130px;
+    border-radius: 2px;
+}
+
+.edit label .fa-times,
+.detail label .fa-times,
+.grant label .fa-times{
+    position:absolute;
+    top: 15px;
+    right: 15px;
+    color: var(--color-menu);
+    font-size: 1.6rem;
+    cursor: pointer;
+}
+
+/* CountDown */
+.grant_time {
+    display: flex;
+}
+.grant_time .left{
+    position: relative;
+    bottom:24px;
+    right: 24px;
+    flex-basis: 30%;
+    text-align: center;
+}
+.grant_time .left >div:first-child{
+    padding: 13px 0px;
+    color: var(--color-title);
+    background-color: var(--color-bg-menu);
+    cursor: pointer;
+}
+.grant_time .left >div:first-child:hover ~ div{
+    opacity: 1;
+}
+.grant_time .left >div:last-child{
+    opacity: 0;
+    background-color: var(--color-bg-menu);
+    transition: all linear 0.25s;
+}
+.grant_time p {
+    padding-bottom: 15px;
+    font-size: 15px;
+}
+.grant_time p span {
+    color: var(--color-menu-hover);
+}
+#countdown li {
+    color: var(--color-menu);
+    display: inline-block;
+    font-size: 1em;
+    list-style-type: none;
+    padding: 1em;
+    text-transform: uppercase;
+    text-align: center;
+}
+#countdown li span {
+    display: block;
+    font-size: 3.0rem;
+}
+/*-------person--------*/
+.info_list .detail .right,
+.info_list .edit .right {
+    margin: 20px 40px 20px 20px;
+}
+.info_list .detail .right div label,
+.info_list .edit .right div label {
+    flex-basis:15%;
+}
+.info_list .detail .right div input,
+.info_list .edit .right div input{
+    flex-basis: 85%;
+}
+.person_info .edit_info .right .address {
+    flex-wrap: wrap;
+    display: flex;
+}
+.person_info .edit_info .right .address  div {
+    flex-basis: 33.33333333333%;
+    display: flex;
+}
+.person_info .edit_info .right .address .title {
+    flex-basis: 100%;
+    flex-wrap: wrap;
+}
+.person_info .edit_info .right .address h2 {
+    flex-basis: 100%;
+    font-size: 1rem;
+    font-weight: 500;
+}
+.person_info .edit_info .right .address hr {
+    height: 0.5px;
+    margin-top: 6px;
+    width: 80px;
+    border: none;
+    background-color: white;
+}
+.person_info .edit_info .right .address div {
+    flex-basis: 33.333333%;
+    display: flex;
+}
+.person_info .edit_info .right .address div label {
+    flex-basis: 75%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.edit_info .address div input {
+    flex-basis: 54%;
+}
+.edit_info .address .postcode input,
+.edit_info .address .village input,
+.edit_info .address .district input {
+    margin-right: 24px;
+}
+.edit_info .address .village label,
+.edit_info .address .commune label,
+.edit_info .address .city label {
+    margin-right: 0px;
+}
+.edit_info .address .district,
+.edit_info .address .city {
+    margin-top: 16px;
+}
+.edit_info .address .postcode select {
+    border: 2px solid var(--color-border);
+    background-color: var(--color-bg);
+    color: #adb5bd;
+    padding: 4px 36px 4px 4px;
+    flex-basis: 70%;
+    margin-right: 24px;
+}
+.person_info .right .address .district input {
+    flex-basis: 72%;
+}
+/*-------------------------- Responsive ----------*/
+
+@media (max-width:850px){
+    /* diagram Home */
+    .home_statistical >div:first-child{
+        flex-direction: column;
+    }
+    .left_diagram{
+        margin: 0px 0px 20px 0px;
+    }
+    /*Menu */
+    #menu{
+        left: -240px;
+        top : 72px;
+    }
+    #container{
+        margin-left: 0px;
+    }
+    #container .header{
+        left: 0px;
+    }
+    /* other responsive */
+    label .fa-bars{
+        display: block;
+    }
+    .input_general .address {
+        flex-wrap: wrap;
+    }
+    .input_general .address div {
+        flex-basis: 100%;
+    }
+    .input_general .input_content_grid .address div input {
+        width: 100%;
+        flex-basis: 82%;
+        margin-right: 0px;
+    }
+    .input_general .input_content_grid .address div label {
+        flex-basis: 18%;
+        margin-right: 0px;
+    }
+    .input_general .input_content_grid .address div select {
+        flex-basis: 30%;
+        margin-right: 0px;
+        height: 40px;
+    }
+    .input_content > div > div > label {
+        flex-basis: 20%;
+    }
+    .input_content > div span {
+        margin-left: 20%;
+    }
+    .input_content > div input[type="text"], .input_content > div input[type="date"] {
+        flex-basis: 80%;
+    }
+    .info_list .detail .right div label,
+    .info_list .edit .right div label {
+        flex-basis: 25%;
+    }
+    .info_list .detail .right div input,
+    .info_list .edit .right div input {
+        flex-basis: 75%;
+    }
+    .person_info .edit .left,
+    .person_info .detail .left{
+        display: none;
+    }
+    .home_header p, .input_header p, .view_header p, .info_header p, .model_header p {
+        flex-basis: 50%;
+        font-size: 1.2rem;
+    }
+    .home_footer ul, .input_footer ul, .view_footer ul, .info_footer ul, .model_footer ul {
+        flex-basis: 40%;
+    }
+    /*  */
+    .search_select ul {
+        width: 450px;
+        font-size: 0.9rem;
+    }
+    .search_select ul button {
+        padding: 4px 12px;
+        font-size: 0.8rem;
+    }
+    .search_select label {
+        padding: 0px;
+    }
+    .search_select .select > span {
+        margin: 8px 24px;
+    }
+    .person_info .remove_column_tb,
+    .home .remove_column_tb,
+    .view .remove_column_tb {
+        display: none;
+    }
+    .view_content table th span,
+    .info_list table th span {
+        cursor: pointer;
+        right: 0;
+    }
+    .home_recent table .info_list_address {
+        width: 200px;
+    }
+    .content_bot .paging {
+        justify-content: center;
+        margin-top: 12px;
+    }
+    #container .header > div > button {
+        left: 100px;
+    }
+    .responsive_ipad{
+        display: none;
+    }
+}
+/*
+
+@media (max-width: 414px) {
+    .home_header span, .input_header span,
+    .view_header span, .info_header span {
+        display: none;
+    }
+    .home .home_footer,
+    .input_general .input_footer,
+    .view .view_footer,
+    .person_info .info_footer,
+    .info_model .model_footer{
+        flex-direction: column;
+        text-align: center;
+    }
+    .home_footer ul, .input_footer ul,
+    .view_footer ul, .info_footer ul, .model_footer ul{
+        margin-top: 10px;
+    }
+    !*Responsive page Input*!
+    .input_content .input_content_grid{
+        padding: 0px;
+    }
+    .input_general .input_content {
+        padding: 20px;
+        font-size: 0.8rem;
+    }
+    .input_general .input_content h1{
+        font-size: 1.2rem;
+    }
+    .input_general .input_content h2{
+        font-size: 0.9rem;
+    }
+    .input_general .input_content_grid div  {
+        margin: 2px 0px;
+    }
+    .input_general .input_content_grid label {
+        flex-basis: 30%;
+    }
+    .input_general .input_content_grid input[type="text"],
+    .input_general .input_content_grid input[type="date"]{
+        height: 28px;
+        font-size: 0.8rem;
+    }
+    .input_general .address {
+        flex-wrap: wrap;
+    }
+    .input_general .address div {
+        flex-basis: 100%;
+    }
+    .input_general .input_content_grid .address div input {
+        width: 100%;
+        flex-basis: 70%;
+        margin-right: 0px;
+    }
+    .input_general .input_content_grid .address div label {
+        flex-basis: 30%;
+        margin-right: 0px;
+    }
+    .input_general .input_content_grid .address div select {
+        flex-basis: 30%;
+        margin-right: 0px;
+        height: 28px;
+        font-size: 0.8rem;
+    }
+    .input_general .address div select option {
+        height: 20px;
+    }
+    !*Responsive page Home*!
+    .home .home_recent{
+        border: none;
+        padding: 0px;
+    }
+    .home .home_recent p{
+        margin: 36px 0px 12px 0px;
+    }
+    .tbl_responsive {
+        table-layout: fixed;
+        width: 100%;
+    }
+    .tbl_responsive thead {
+        display: none;
+    }
+    #container .home_recent .tbl_responsive tbody tr,
+    .view_content .tbl_responsive tbody tr,
+    .info_list .tbl_responsive tbody tr {
+        border: 2px solid var(--color-border);
+        display: block;
+        margin-bottom: 15px;
+    }
+    .tbl_responsive tbody td {
+        border: none;
+        display: block;
+        padding: 10px 10px 15px 40%;
+        position: relative;
+    }
+    .tbl_responsive tbody td:before {
+        content: attr(data-title);
+        display: table-cell;
+        height: 100%;
+        left: 15px;
+        position: absolute;
+        width: 30%;
+    }
+    !*Responsive page User*!
+    .grant_time{
+        flex-direction: column;
+    }
+    .grant_time .left{
+        bottom: 0px;
+        right: 0px;
+        flex-basis: 0%;
+    }
+    #countdown{
+        text-align: center;
+    }
+    #countdown li span{
+        font-size: 2.5rem;
+    }
+    #countdown ul{
+        display: flex;
+    }
+    #countdown li{
+        font-size: 0.8rem;
+    }
+    .view_content .content_top{
+        flex-direction: column-reverse;
+        margin: 20px 0px;
+    }
+    .add_user{
+        margin: 15px 0px;
+        text-align: center;
+    }
+    .add_user .add_user_detail{
+        width: 300px;
+        padding: 10px;
+    }
+    .add_user .add_user_detail input[type="checkbox"] {
+        height: auto;
+        width: auto;
+        flex-basis: 0%;
+    }
+    .add_user_detail .grant label.first {
+        flex-basis: 33.333333%;
+    }
+    .add_user_detail .grant label {
+        flex-basis: 20%;
+    }
+    .add_user_detail h2{
+        margin: 20px 0px;
+        font-size: 17px;
+    }
+    .add_user_detail div{
+        flex-direction: column;
+        padding: 8px 20px;
+    }
+    .add_user_detail div label{
+        margin-bottom: 5px;
+    }
+    .add_user .submit input{
+        width: 80px;
+        margin: 10px 30%;
+    }
+    .content_top .search {
+        display: flex;
+    }
+    .content_top label{
+        padding: 13px 0px;
+    }
+    .content_top .search input{
+        width: 190px;
+    }
+    .view_password p {
+        text-align: left;
+    }
+    .view_content .content_bot, .info_list .content_bot{
+        flex-direction: column;
+    }
+    .content_bot p{
+        text-align: center;
+        margin-bottom: 10px;
+    }
+    !*table user*!
+    .detail_user, .detail_person{
+        display: none;
+    }
+    .view_content table tr td:first-child,
+    .info_list table tr td:first-child{
+        width: 100%;
+    }
+    .tbl_responsive tbody .grant td,  .tbl_responsive tbody .edit td{
+        padding-left: 0%;
+    }
+    .detail h3, .grant h3, .edit h3{
+        margin: 10px 0px;
+    }
+    .grant .left, .edit .left, .info_list .edit h4{
+        display: none;
+    }
+    .grant .right, .edit .right{
+        margin: 0 0 0 30px;
+    }
+    .grant .right div, .edit .right div{
+        flex-direction: column;
+    }
+    .grant .right div input, .edit .right div input{
+        width: 85%;
+    }
+    .grant .right .submit_grant input, .edit .right .submit_edit input, .add_user_detail >input{
+        margin: 5px 20%;
+        width: 90px;
+    }
+    !*Responsive page person info*!
+    .info_list .content_top, .content_top .content_select{
+        flex-direction: column-reverse;
+    }
+    .info_list .content_top .search{
+        margin-bottom: 20px;
+    }
+    .content_top .content_select .search_select{
+        text-align: left;
+        display: flex;
+        flex-direction: column;
+    }
+    .content_top .count{
+        margin-top: 20px;
+    }
+    .content_top .search_select select{
+        width: 170px;
+    }
+    .info_list .edit h3{
+        margin: 30px 0px 0px 0px;
+    }
+    .info_list .edit .right div input, .info_list .address select {
+        width: 100%;
+    }
+    .info_list .edit .right div{
+        margin-top: 5px;
+    }
+    .info_list .edit .right .submit_edit input{
+        margin: 15px 20% -10px 20%;
+        width: 100px;
+    }
+
+    .person_info .remove_column_tb,
+    .home .remove_column_tb,
+    .view .remove_column_tb {
+        display: inherit;
+    }
+    .search_select .select {
+        text-align: center;
+    }
+    .search_select ul {
+        width: 300px;
+        font-size: 1rem;
+        top: 50px;
+    }
+    .home_recent table .info_list_address {
+        width: auto;
+    }
+}
+*/
+
+@media (max-width: 376px) {
+    * {
+        font-size: 12px;
+    }
+    .header .account img {
+        display: none;
+    }
+    .home_recent table .info_list_address {
+        width: auto;
+    }
+    .input_content > div > div > label {
+        flex-basis: 30%;
+    }
+    .input_general .input_content_grid .address div label {
+        flex-basis: 45%;
+    }
+    .person_info table .info_list_address p {
+        width: 180px;
+        white-space: pre-wrap;
+        overflow: inherit;
+        text-overflow: inherit;
+    }
+    .search_select .select,
+    .content_top .count{
+        text-align: center;
+    }
+    .add_user{
+        text-align: center;
+    }
+    .content_top .search,
+    #countdown ul{
+        justify-content: center;
+    }
+    .search_select ul {
+        width: 250px;
+    }
+    #container .header > div > button {
+        left: 75px;
+    }
+    .home_header p, .input_header p, .view_header p, .info_header p, .model_header p {
+        flex-basis: 100%;
+        font-size: 1.1rem;
+    }
+    .input_content > div > div > label {
+        flex-basis: 30%;
+    }
+    .input_content > div span {
+        margin-left: 30%;
+    }
+    .input_content > div input[type="text"], .input_content > div input[type="date"] {
+        flex-basis: 70%;
+    }
+    .home_header span, .input_header span,
+    .view_header span, .info_header span {
+        display: none;
+    }
+    .home .home_footer,
+    .input_general .input_footer,
+    .view .view_footer,
+    .person_info .info_footer,
+    .info_model .model_footer{
+        flex-direction: column;
+        text-align: center;
+    }
+    .home_footer ul, .input_footer ul,
+    .view_footer ul, .info_footer ul, .model_footer ul{
+        margin-top: 10px;
+    }
+    /*Responsive page Input*/
+    .input_content .input_content_grid{
+        padding: 0px;
+    }
+    .input_general .input_content {
+        padding: 20px;
+    }
+    .input_content h1{
+        font-size: 18px;
+    }
+    .input_content form > div{
+        flex-direction: column;
+        margin: 0px;
+    }
+    /*Responsive page Home*/
+    .home .home_recent{
+        border: none;
+        padding: 0px;
+    }
+    .home .home_recent p{
+        margin: 36px 0px 12px 0px;
+    }
+    .tbl_responsive {
+        table-layout: fixed;
+        width: 100%;
+    }
+    .tbl_responsive thead {
+        display: none;
+    }
+    #container .home_recent .tbl_responsive tbody tr,
+    .view_content .tbl_responsive tbody tr,
+    .info_list .tbl_responsive tbody tr {
+        border: 2px solid var(--color-border);
+        display: block;
+        margin-bottom: 15px;
+    }
+    .tbl_responsive tbody td {
+        border: none;
+        display: block;
+        padding: 10px 10px 15px 40%;
+        position: relative;
+    }
+    .tbl_responsive tbody td:before {
+        content: attr(data-title);
+        display: table-cell;
+        height: 100%;
+        left: 15px;
+        position: absolute;
+        width: 30%;
+    }
+    /*Responsive page User*/
+    .grant_time{
+        flex-direction: column;
+    }
+    .grant_time .left{
+        bottom: 0px;
+        right: 0px;
+        flex-basis: 0%;
+    }
+    #countdown{
+        text-align: center;
+    }
+    #countdown li span{
+        font-size: 2.5rem;
+    }
+    #countdown ul{
+        display: flex;
+    }
+    #countdown li{
+        font-size: 0.8rem;
+    }
+    .view_content .content_top{
+        flex-direction: column-reverse;
+        margin: 20px 0px;
+    }
+    .add_user{
+        margin: 15px 0px;
+    }
+    .add_user .add_user_detail{
+        width: 300px;
+        padding: 10px;
+    }
+    .add_user_detail h2{
+        margin: 20px 0px;
+        font-size: 17px;
+    }
+    .add_user_detail div{
+        flex-direction: column;
+        padding: 8px 20px;
+    }
+    .add_user_detail div label{
+        margin-bottom: 5px;
+    }
+    .add_user .submit input{
+        width: 80px;
+        margin: 10px 30%;
+    }
+    .content_top .search {
+        display: flex;
+    }
+    .content_top label{
+        padding: 13px 0px;
+    }
+    .content_top .search input{
+        width: 190px;
+    }
+    .view_password p {
+        text-align: left;
+    }
+    .view_content .content_bot, .info_list .content_bot{
+        flex-direction: column;
+    }
+    .content_bot p{
+        text-align: center;
+        margin-bottom: 10px;
+    }
+    /*table user*/
+    .detail_user, .detail_person{
+        display: none;
+    }
+    .view_content table tr td:first-child,
+    .info_list table tr td:first-child{
+        width: 100%;
+    }
+    .tbl_responsive tbody .grant td,  .tbl_responsive tbody .edit td{
+        padding-left: 0%;
+    }
+    .detail h3, .grant h3, .edit h3{
+        margin: 10px 0px;
+    }
+    .grant .left, .edit .left, .info_list .edit h4{
+        display: none;
+    }
+    .grant .right{
+        margin: 0 0 0 30px;
+    }
+    .grant .right div, .edit .right div{
+        flex-direction: column;
+    }
+    .grant .right div input, .edit .right div input{
+        width: 85%;
+    }
+    .grant .right .submit_grant input, .edit .right .submit_edit input, .add_user_detail >input{
+        margin: 5px 20%;
+        width: 90px;
+    }
+    /*Responsive page person info*/
+    .info_list .content_top, .content_top .content_select{
+        flex-direction: column-reverse;
+    }
+    .info_list .content_top .search{
+        margin-bottom: 20px;
+    }
+    .content_top .content_select .search_select{
+        text-align: left;
+        display: flex;
+        flex-direction: column;
+    }
+    .content_top .count{
+        margin-top: 20px;
+    }
+    .content_top .search_select select{
+        width: 170px;
+    }
+    .info_list .edit h3{
+        margin: 30px 0px 0px 0px;
+    }
+    .info_list .edit .right div input, .info_list .address select {
+        width: 100%;
+    }
+    .info_list .edit .right div{
+        margin-top: 5px;
+    }
+    .info_list .edit .right .submit_edit input{
+        margin: 15px 20% -10px 20%;
+        width: 100px;
+    }
+    #container .info_list .edit .right{
+        margin: 0px 0px 0px 20px ;
+    }
+    .below_diagram canvas{
+        margin-left: 100px;
+    }
+
+}
+
+
+/* Biểu đồ trang người dân */
+.chart >div:first-child{
+    display: block;
+    width: 100%;
+    height: 250px;
+}
+.chart {
+    display: block;
+}
+.above_diagram{
+    width: 100%;
+    margin-right: 15px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.below_diagram{
+    display: flex;
+    width: 100%;
+    height: 250px;
+}
+
+.chart4 , .chart5 , .chart6 {
+    width: 33%;
+    height: 250px;
+}
+.above_diagram, .below_diagram{
+    border: solid 1px var(--color-border);
+    border-radius: 3px;
+}
+@media (max-width: 599px) {
+    .chart .below_diagram {
+        flex-direction: column;
+        height: 760px;
+        margin-bottom: 12px;
+    }
+
+}
+
+.csw-btn-button {
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 14px;
+
+    padding: 9px 33px;
+
+    color: #ffffff !important;
+
+    border-radius: 2px;
+
+    background: #00acc1;
+
+    border: 1px solid #00acc1;
+
+    transition: all 0.2s ease 0s;
+
+    margin: 36px 0px 12px;
+
+    position: relative;
+
+    top: 1px;
+
+}
+
+.csw-btn-button:hover {
+
+    background: #008a9b;
+
+}
+
+
+
+
+
+

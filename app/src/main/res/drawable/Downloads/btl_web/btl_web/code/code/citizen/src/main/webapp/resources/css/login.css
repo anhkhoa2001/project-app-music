@@ -1,0 +1,244 @@
+:root {
+    --color-menu: #fff;
+    --color-bg: #9097a7;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    background: #343b4a;
+}
+
+.container {
+    width: 100%;
+    height: 100%;
+    background: url(../img/background-den-dep-danh-cho-pc_034511697.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo {
+    color: var(--color-menu);
+    position: relative;
+    bottom: 115px;
+    right: 100px;
+}
+
+.logo h1 {
+    font-size: 50px;
+}
+
+.logo p {
+    font-size: 20px;
+    padding-top: 12px;
+}
+
+.login {
+    width: 350px;
+    height: 400px;
+    background: #fff;
+    background: transparent;
+    color: var(--color-menu);
+    position: relative;
+    left: 300px;
+}
+
+.login h1 {
+    position: relative;
+    margin: 40px 0 30px;
+    padding-bottom: 12px;
+    width: fit-content;
+    font-size: 30px;
+}
+
+.login h1::before {
+    content: "";
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 5px;
+    background: var(--color-bg);
+    bottom: 0;
+}
+
+.login button {
+    width: 100%;
+    height: 35px;
+    border: 2px solid var(--color-bg);
+    cursor: pointer;
+    background: transparent;
+    color: var(--color-menu);
+}
+
+.form-login {
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.form-login input {
+    width: 100%;
+    height: 45px;
+    padding-left: 30px;
+    border: none;
+    border-bottom: 2px solid var(--color-bg);
+    outline: none;
+    font-size: 16px;
+    background: transparent;
+    color: var(--color-menu);
+}
+
+.form-login input::placeholder {
+    color: var(--color-menu);
+}
+
+.form-login i {
+    position: absolute;
+    font-size: 20px;
+    line-height: 45px;
+}
+
+@media only screen and (max-width: 320px) {
+    .container {
+        flex-direction: column;
+    }
+    .logo p {
+        display: none;
+    }
+
+    .logo {
+        position: relative;
+        left: -20px;
+        top: 10px;
+    }
+    .login {
+        width: 70%;
+        position: relative;
+        left: -4px;
+        top: 50px;
+    }
+}
+
+@media only screen and (max-width: 413px) and (min-width: 375px) {
+    .container {
+        flex-direction: column;
+    }
+    .logo p {
+        display: none;
+    }
+
+    .logo {
+        position: relative;
+        top: -30px;
+        left: -40px;
+    }
+    .login {
+        width: 70%;
+        position: relative;
+        left: -4px;
+        top: 40px;
+    }
+}
+
+@media only screen and (max-width: 599px) and (min-width: 414px) {
+    .container {
+        flex-direction: column;
+    }
+    .logo p {
+        display: none;
+    }
+
+    .logo {
+        position: relative;
+        left: -50px;
+        top: 0px;
+    }
+    .login {
+        width: 70%;
+        position: relative;
+        left: -4px;
+        top: 50px;
+    }
+}
+
+@media only screen and (max-width: 767px) and (min-width: 600px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .logo {
+        position: relative;
+        left: -10px;
+        top: -35px;
+    }
+
+    .login {
+        width: 70%;
+        position: relative;
+        left: -4px;
+        top: 50px;
+    }
+}
+
+@media only screen and (max-width: 989px) and (min-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .logo {
+        position: relative;
+        left: -10px;
+        top: -35px;
+    }
+
+    .login {
+        width: 70%;
+        position: relative;
+        left: -4px;
+        top: 50px;
+    }
+}
+
+
+@media only screen and (max-width: 1550px) and (min-width: 990px) {
+    .container {
+        display: flex;
+    }
+    .logo {
+        position: relative;
+        left: -200px;
+        top: -100px;
+    }
+    .login {
+        width: 30%;
+        position: relative;
+        left: 150px;
+        top: 10px;
+    }
+}
+
+#container .header > div > button {
+    background-color: #00acc1;
+    color: var(--color-title);
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    border-radius: 2px;
+    padding: 8px 12px;
+    position: absolute;
+    top: 50%;
+    left: 24px;
+    transform: translate(0, -50%);
+}

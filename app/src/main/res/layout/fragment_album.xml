@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.AlbumFragment">
+
+    <RelativeLayout
+        android:id="@+id/relative_album"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="7dp">
+
+        <TextView
+            android:id="@+id/album_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nghệ sĩ nổi bật"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/album_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="Xem Thêm"
+            android:textColor="@color/cardview_dark_background"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/device_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/relative_album"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp" />
+
+
+</RelativeLayout>
