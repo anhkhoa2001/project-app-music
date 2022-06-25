@@ -27,8 +27,13 @@ public class MyService extends Service{
 
     @Override
     public IBinder onBind(Intent intent) {
-        player = new MediaPlayer();
-        startMedia(SongListAdapter.musicStatic.getSource());
+        if(SongListAdapter.musicStatic.isType()) {
+            player = new MediaPlayer();
+            startMedia(SongListAdapter.musicStatic.getSource());
+        } else {
+            player = MediaPlayer.create(getApplicationContext(), Integer.parseInt(SongListAdapter.musicStatic.getSource()));
+            player.start();
+        }
         return this.binder;
     }
 
@@ -50,6 +55,10 @@ public class MyService extends Service{
 
     public MediaPlayer getPlayer() {
         return player;
+    }
+
+    public void setPlayer(MediaPlayer player) {
+        this.player = player;
     }
 
     public void startMedia(String url) {

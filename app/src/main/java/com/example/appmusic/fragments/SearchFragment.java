@@ -19,6 +19,7 @@ import android.widget.EditText;
 
 import com.example.appmusic.api.MusicApi;
 import com.example.appmusic.adapters.SongListAdapter;
+import com.example.appmusic.models.AMusic;
 import com.example.appmusic.models.Music;
 import com.example.appmusic.R;
 
@@ -32,7 +33,7 @@ public class SearchFragment extends Fragment {
 
     View view;
     RecyclerView recyclerView;
-    List<Music> music;
+    List<Music> musics;
     private SongListAdapter songListAdapter;
     Context context;
     EditText eventSearch;
@@ -59,7 +60,9 @@ public class SearchFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                songListAdapter = new SongListAdapter(context, filterListMusics(music, charSequence.toString()), 0, null);
+                List<AMusic> aMusics = new ArrayList<>();
+                aMusics.addAll(filterListMusics(musics, charSequence.toString()));
+                songListAdapter = new SongListAdapter(context, aMusics, 0, null);
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
                 recyclerView.setAdapter(songListAdapter);
             }
@@ -113,8 +116,10 @@ public class SearchFragment extends Fragment {
         protected void onPostExecute(List<Music> result) {
             super.onPostExecute(result);
             Log.v("Music", result.size() + "=====size");
-            music = result;
-            songListAdapter = new SongListAdapter(context, music, 0, null);
+            musics = result;
+            List<AMusic> aMusics = new ArrayList<>();
+            aMusics.addAll(musics);
+            songListAdapter = new SongListAdapter(context, aMusics, 0, null);
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
             recyclerView.setAdapter(songListAdapter);
 

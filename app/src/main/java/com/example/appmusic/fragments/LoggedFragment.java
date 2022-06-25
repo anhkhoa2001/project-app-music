@@ -61,6 +61,16 @@ public class LoggedFragment extends Fragment {
             }
         });
 
+        onDevice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                OnDeviceFragment nextFrag= new OnDeviceFragment();
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.layout_user, nextFrag)
+                        .commit();
+            }
+        });
+
         return view;
     }
 

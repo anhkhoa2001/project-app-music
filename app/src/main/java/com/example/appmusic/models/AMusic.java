@@ -5,11 +5,11 @@ public abstract class AMusic {
     private int id;
     private String name;
     private int musicTracks;//tinh theo s
-    private String image;
     private int listens;
     private int likes;
     private boolean type;
-    private String singer;
+    private String source;
+    private String image;
 
     public int getId() {
         return id;
@@ -33,14 +33,6 @@ public abstract class AMusic {
 
     public void setMusicTracks(int musicTracks) {
         this.musicTracks = musicTracks;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
     }
 
     public int getListens() {
@@ -67,11 +59,19 @@ public abstract class AMusic {
         this.type = type;
     }
 
-    public String getSinger() {
-        return singer;
+    public String getSource() {
+        return source;
     }
 
-    public void setSinger(String singer) {
-        this.singer = singer;
+    public void setSource(String source) {
+        this.source = source;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

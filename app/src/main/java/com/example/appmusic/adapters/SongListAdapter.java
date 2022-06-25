@@ -17,21 +17,23 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.appmusic.api.MusicApi;
 import com.example.appmusic.activities.Base;
 import com.example.appmusic.activities.PlayMusicActivity;
+import com.example.appmusic.models.AMusic;
 import com.example.appmusic.models.Music;
 import com.example.appmusic.R;
+import com.example.appmusic.models.MusicOnDevice;
 import com.example.appmusic.result.EResponse;
 
 import java.util.List;
 
 public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHolder>{
     private Context context;
-    private List<Music> songList;
+    private List<AMusic> songList;
     private int id;
     private String type_id;
     private int statusLike;
-    public static Music musicStatic;
+    public static AMusic musicStatic;
 
-    public SongListAdapter(Context context, List<Music> songList, int id, String type_id) {
+    public SongListAdapter(Context context, List<AMusic> songList, int id, String type_id) {
         this.context = context;
         this.songList = songList;
         this.id = id;
@@ -48,9 +50,13 @@ public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int i) {
-        Music music = songList.get(i);
+        AMusic music = songList.get(i);
         statusLike = getStatusLikeByUsername(music);
-        holder.songSinger.setText(music.singersToString());
+        if(music.isType()) {
+            holder.songSinger.setText(((Music) music).singersToString());
+        } else {
+            holder.songSinger.setText(((MusicOnDevice) music).getSinger());
+        }
         holder.songName.setText(music.getName());
         holder.songIndex.setText(i + 1 + "");
         holder.songLike.setImageResource(statusLike == 1
@@ -58,8 +64,13 @@ public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHo
         holder.viewStatusLike = statusLike;
     }
 
-    public int getStatusLikeByUsername(Music music) {
-        return music.getUserByUsername(Base.username) != null ? 1 : 0;
+    public int getStatusLikeByUsername(AMusic music) {
+        if(music.isType()) {
+            Music newMusic = (Music) music;
+            return newMusic.getUserByUsername(Base.username) != null ? 1 : 0;
+        }
+
+        return 0;
     }
 
     @Override
@@ -82,7 +93,7 @@ public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHo
             songLike.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if(Base.isLogged()) {
+                    if(Base.isLogged() && songList.get(Integer.parseInt(songIndex.getText().toString()) - 1).isType()) {
                         new EventHandlerLike(songLike, viewStatusLike).execute("/user/like", String.valueOf(songList
                                         .get(Integer.parseInt(songIndex.getText().toString()) - 1).getId()),
                                 Base.token, String.valueOf(viewStatusLike));
@@ -116,10 +127,14 @@ public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHo
         }
     }
 
-    public String[] listToStrings(List<Music> music) {
+    public String[] listToStrings(List<AMusic> music) {
         String[] array = new String[music.size()];
         for(int i = 0; i< music.size(); i++) {
-            array[i] = music.get(i).convertToElementString();
+            if(music.get(i).isType()) {
+                array[i] = ((Music) music.get(i)).convertToElementString();
+            } else {
+                array[i] = ((MusicOnDevice) music.get(i)).convertToElementString();
+            }
         }
         return array;
     }

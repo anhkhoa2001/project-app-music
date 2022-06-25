@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.appmusic.api.MusicApi;
 import com.example.appmusic.adapters.SongListAdapter;
+import com.example.appmusic.models.AMusic;
 import com.example.appmusic.models.Music;
 import com.example.appmusic.R;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
@@ -91,7 +92,7 @@ public class SongListActivity extends Base {
 
     private class GetAllTask extends AsyncTask<String, Void, List<Music>> {
         protected ProgressDialog dialog;
-        public GetAllTask(){
+        public GetAllTask() {
         }
         @Override
         protected void onPreExecute() {
@@ -112,7 +113,10 @@ public class SongListActivity extends Base {
             super.onPostExecute(result);
 
             songList = result;
-            songListAdapter = new SongListAdapter(SongListActivity.this, songList, id, type_id);
+            List<AMusic> aMusics = new ArrayList<>();
+            aMusics.addAll(songList);
+
+            songListAdapter = new SongListAdapter(SongListActivity.this, aMusics, id, type_id);
             recyclerviewSongList.setLayoutManager(new LinearLayoutManager(SongListActivity.this));
             recyclerviewSongList.setAdapter(songListAdapter);
         }

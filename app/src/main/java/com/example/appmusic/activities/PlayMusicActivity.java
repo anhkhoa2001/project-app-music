@@ -27,15 +27,21 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.appmusic.adapters.PlayMusicViewPagerAdapter;
+import com.example.appmusic.adapters.SongListAdapter;
 import com.example.appmusic.fragments.MusicDiscFragment;
 import com.example.appmusic.fragments.PlayListFragment;
+import com.example.appmusic.models.AMusic;
 import com.example.appmusic.models.Music;
+import com.example.appmusic.models.MusicOnDevice;
+import com.example.appmusic.models.Singer;
 import com.example.appmusic.notification.MyService;
 import com.example.appmusic.notification.CreateNotification;
 import com.example.appmusic.notification.IPlayable;
 import com.example.appmusic.R;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
@@ -46,7 +52,6 @@ public class PlayMusicActivity extends Base implements
     SeekBar seekBar;
     ImageButton btnRandom, btnPreview, btnPlay, btnNext, btnRepeat;
     ViewPager2 viewPager;
-    MediaPlayer mediaPlayer;
     MusicDiscFragment fragment_dia_nhac;
     PlayListFragment fragment_play_danhsach_baihat;
     public static PlayMusicViewPagerAdapter adapternhac;
@@ -66,7 +71,7 @@ public class PlayMusicActivity extends Base implements
     private boolean doListen;
     private String singerCurrent;
     public RemoteViews remoteViews;
-    private Music music;
+    private AMusic music;
     private boolean isPlaying; // true la nhac dang phat
     private Intent intentInService;
 
@@ -125,28 +130,32 @@ public class PlayMusicActivity extends Base implements
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 //        eventClick();
-        init();
         intentInService = new Intent(this, MyService.class);
         this.stopService(intentInService);
         this.startService(intentInService);
-        this.bindService(intentInService, weatherServiceConnection, Context.BIND_AUTO_CREATE);
+        init();
+        this.bindService(intentInService, serviceConnection, Context.BIND_AUTO_CREATE);
         isPlaying = true;
     }
 
     public void runMusic(String url) {
-        if(mService != null) {
-            mediaPlayer = mService.getPlayer();
-        }
-        try {
-            mService.startMedia(url);
-        } catch (Exception e) {
-            e.printStackTrace();
+        mService.getPlayer().pause();
+        mService.getPlayer().reset();
+        if(music.isType()) {
+            try {
+                mService.startMedia(url);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            mService.setPlayer(MediaPlayer.create(getApplicationContext(), Integer.parseInt(url)));
+            mService.getPlayer().start();
         }
         btnPlay.setImageResource(R.drawable.ic_pause_white);
-        handlerSeekBar(mediaPlayer);
+        handlerSeekBar(mService.getPlayer());
 
-        mediaPlayer.setOnBufferingUpdateListener(this);
-        mediaPlayer.setOnCompletionListener(this);
+        mService.getPlayer().setOnBufferingUpdateListener(this);
+        mService.getPlayer().setOnCompletionListener(this);
     }
 
     public String convertMillisecondsToMinutes(int miniseconds) {
@@ -157,7 +166,7 @@ public class PlayMusicActivity extends Base implements
     }
 
     private void primarySeekBarProgressUpdater() {
-        seekBar.setProgress((int)(((float) mediaPlayer.getCurrentPosition()/mediaFileLengthInMilliseconds)*100));
+        seekBar.setProgress((int)(((float) mService.getPlayer().getCurrentPosition()/mediaFileLengthInMilliseconds)*100));
         calculatorListen++;
         if(calculatorListen > LISTEN_TIME_THRESH_HOLD && doListen) {
             totalListen++;
@@ -166,9 +175,9 @@ public class PlayMusicActivity extends Base implements
                 currentListen = totalListen;
             }
         }
-        txtTime.setText(convertMillisecondsToMinutes(mediaPlayer.getCurrentPosition()));
-        isPlaying = mediaPlayer.isPlaying();
-        if (mediaPlayer.isPlaying()) {
+        txtTime.setText(convertMillisecondsToMinutes(mService.getPlayer().getCurrentPosition()));
+        isPlaying = mService.getPlayer().isPlaying();
+        if (mService.getPlayer().isPlaying()) {
             Runnable notification = new Runnable() {
                 public void run() {
                     primarySeekBarProgressUpdater();
@@ -223,11 +232,9 @@ public class PlayMusicActivity extends Base implements
             public void onClick(View view) {
                 int rd = new Random().nextInt();
                 int randomIdMusic = (rd < 0) ? rd*(-1) : rd;
-
-                mediaPlayer.pause();
-                mediaPlayer.reset();
                 runMusic(getMusic(musics[randomIdMusic%musics.length]).getSource());
                 URL_MUSIC = getMusic(musics[randomIdMusic%musics.length]).getSource();
+                music = getMusic(musics[randomIdMusic%musics.length]);
             }
         });
 
@@ -235,18 +242,7 @@ public class PlayMusicActivity extends Base implements
             @Override
             public void onClick(View view) {
                 btnPlay.setImageResource(R.drawable.ic_pause_white);
-                mediaPlayer.pause();
-                mediaPlayer.reset();
-                if(music_id == musics.length - 1) {
-                    runMusic(URL_MUSIC);
-                } else {
-                    music_id++;
-                    runMusic(getMusic(musics[music_id]).getSource());
-                    URL_MUSIC = getMusic(musics[music_id]).getSource();
-                    music = getMusic(musics[music_id]);
-                }
-                CreateNotification.createNotification(getApplicationContext(), music, R.drawable.ic_pause_white, 1,
-                        10);
+                onMusicNotiNext();
             }
         });
 
@@ -254,18 +250,7 @@ public class PlayMusicActivity extends Base implements
             @Override
             public void onClick(View view) {
                 btnPlay.setImageResource(R.drawable.ic_pause_white);
-                mediaPlayer.pause();
-                mediaPlayer.reset();
-                if(music_id == 0) {
-                    runMusic(URL_MUSIC);
-                } else {
-                    music_id--;
-                    runMusic(getMusic(musics[music_id]).getSource());
-                    URL_MUSIC = getMusic(musics[music_id]).getSource();
-                    music = getMusic(musics[music_id]);
-                }
-                CreateNotification.createNotification(getApplicationContext(), music, R.drawable.ic_pause_white, 1,
-                        10);
+                onMusicNotiPre();
             }
         });
 
@@ -289,7 +274,7 @@ public class PlayMusicActivity extends Base implements
         seekBar.setOnTouchListener(this);
     }
 
-    public Music getMusic(String musicString) {
+    public AMusic getMusic(String musicString) {
         int id = Integer.parseInt(musicString.split(" =-= ")[0]);
         String name = musicString.split(" =-= ")[1];
         String source = musicString.split(" =-= ")[2];
@@ -300,11 +285,24 @@ public class PlayMusicActivity extends Base implements
         int likes = Integer.parseInt(musicString.split(" =-= ")[7]);
         boolean typeIsOnline = musicString.split(" =-= ")[8].equals("true");
         currentListen = listens;
-        singerCurrent = singer;
-        Music music = new Music(id, name, source, musicTracks, image , listens, likes);
-        music.setType(typeIsOnline);
-        music.setSinger(singerCurrent);
-        return music;
+        if(typeIsOnline) {
+            Music music = new Music(id, name, source, musicTracks, image , listens, likes);
+            music.setType(true);
+            Singer newSinger = new Singer();
+            newSinger.setName(singerCurrent);
+            singerCurrent = singer;
+            List<Singer> singers = new ArrayList<>();
+            singers.add(newSinger);
+            music.setSingers(singers);
+            this.music = music;
+            return music;
+        } else {
+            MusicOnDevice music = new MusicOnDevice(id, name, Integer.parseInt(source), musicTracks,
+                    Integer.parseInt(image) , singerCurrent);
+            music.setType(false);
+            this.music = music;
+            return music;
+        }
     }
 
     public void eventHandlerRepeat() {
@@ -331,17 +329,16 @@ public class PlayMusicActivity extends Base implements
     @Override
     public boolean onTouch(View view, MotionEvent motionEvent) {
         if(view.getId() == R.id.seekbar_song){
-             if(mediaPlayer.isPlaying()){
+             if(mService.getPlayer().isPlaying()){
                 SeekBar sb = (SeekBar) view;
                 int playPositionInMillisecconds = (mediaFileLengthInMilliseconds / 100) * sb.getProgress();
-                mediaPlayer.seekTo(playPositionInMillisecconds);
+                 mService.getPlayer().seekTo(playPositionInMillisecconds);
             }
         }
         return false;
     }
 
     public void handlerSeekBar(MediaPlayer mediaPlayer) {
-        this.mediaPlayer = mediaPlayer;
         mediaFileLengthInMilliseconds = mediaPlayer.getDuration();
         txtTotalTime.setText(convertMillisecondsToMinutes(mediaFileLengthInMilliseconds));
 
@@ -382,12 +379,17 @@ public class PlayMusicActivity extends Base implements
             URL_MUSIC = getMusic(musics[music_id]).getSource();
             music = getMusic(musics[music_id]);
         }
-        try {
-            mService.getPlayer().setDataSource(URL_MUSIC);
-            mService.getPlayer().prepare();
+        if(music.isType()) {
+            try {
+                mService.getPlayer().setDataSource(URL_MUSIC);
+                mService.getPlayer().prepare();
+                mService.getPlayer().start();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            mService.setPlayer(MediaPlayer.create(this, Integer.parseInt(URL_MUSIC)));
             mService.getPlayer().start();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
         handlerSeekBar(mService.getPlayer());
         CreateNotification.createNotification(this, music, R.drawable.ic_pause_white, 1,
@@ -397,8 +399,6 @@ public class PlayMusicActivity extends Base implements
     @Override
     public void onMusicNotiPlay() {
         if(mService != null) {
-            Log.v("Music", "i service" + mService.getPlayer());
-            Log.v("Music", "i service" + media_length);
             mService.getPlayer().seekTo(media_length);
             mService.getPlayer().start();
             isPlaying = true;
@@ -436,19 +436,24 @@ public class PlayMusicActivity extends Base implements
             URL_MUSIC = getMusic(musics[music_id]).getSource();
             music = getMusic(musics[music_id]);
         }
-        try {
-            mService.getPlayer().setDataSource(URL_MUSIC);
-            mService.getPlayer().prepare();
+        if(music.isType()) {
+            try {
+                mService.getPlayer().setDataSource(URL_MUSIC);
+                mService.getPlayer().prepare();
+                mService.getPlayer().start();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            mService.setPlayer(MediaPlayer.create(this, Integer.parseInt(URL_MUSIC)));
             mService.getPlayer().start();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
         handlerSeekBar(mService.getPlayer());
         CreateNotification.createNotification(this, music, R.drawable.ic_pause_white, 1,
                 10);
     }
 
-    ServiceConnection weatherServiceConnection = new ServiceConnection() {
+    ServiceConnection serviceConnection = new ServiceConnection() {
 
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
@@ -468,7 +473,7 @@ public class PlayMusicActivity extends Base implements
     public void onStop() {
         super.onStop();
         if(mBound) {
-            this.unbindService(weatherServiceConnection);
+            this.unbindService(serviceConnection);
             mBound = false;
         }
     }

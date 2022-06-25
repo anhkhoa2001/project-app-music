@@ -18,15 +18,17 @@ import com.example.appmusic.R;
 import com.example.appmusic.activities.Base;
 import com.example.appmusic.adapters.SongListAdapter;
 import com.example.appmusic.api.MusicApi;
+import com.example.appmusic.models.AMusic;
 import com.example.appmusic.models.Music;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FavouriteFragment extends Fragment {
 
     View view;
     RecyclerView recyclerView;
-    List<Music> music;
+    List<Music> musics;
     private SongListAdapter songListAdapter;
     Context context;
     ImageButton btnBack;
@@ -83,8 +85,11 @@ public class FavouriteFragment extends Fragment {
         protected void onPostExecute(List<Music> result) {
             super.onPostExecute(result);
             Log.v("Music", result.size() + "=====size");
-            music = result;
-            songListAdapter = new SongListAdapter(context, music, 0, null);
+            musics = result;
+            List<AMusic> aMusics = new ArrayList<>();
+            aMusics.addAll(musics);
+
+            songListAdapter = new SongListAdapter(context, aMusics, 0, null);
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
             recyclerView.setAdapter(songListAdapter);
 

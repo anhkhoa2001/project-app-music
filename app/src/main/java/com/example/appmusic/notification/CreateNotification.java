@@ -7,12 +7,15 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v4.media.session.MediaSessionCompat;
+import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
+import com.example.appmusic.models.AMusic;
 import com.example.appmusic.models.Music;
 import com.example.appmusic.R;
+import com.example.appmusic.models.MusicOnDevice;
 
 import java.io.InputStream;
 import java.net.URL;
@@ -27,16 +30,20 @@ public class CreateNotification {
     public static Notification notification;
     public static NotificationManagerCompat notificationCompat;
 
-    public static void createNotification(Context context, Music music, int playbutton, int pos, int size) {
+    public static void createNotification(Context context, AMusic music, int playbutton, int pos, int size) {
         notificationCompat = NotificationManagerCompat.from(context);
         MediaSessionCompat mediaSessionCompat = new MediaSessionCompat( context, "tag");
+        Log.v("Music", "CHECK MUSIC IS NULL" + music);
         Bitmap bitmap = null;
-        try {
-            InputStream inputStream = new URL(music.getImage()).openStream();
-            bitmap = BitmapFactory.decodeStream(inputStream);
-
-        } catch (Exception e) {
-
+        if(music.isType()) {
+            try {
+                InputStream inputStream = new URL(music.getImage()).openStream();
+                bitmap = BitmapFactory.decodeStream(inputStream);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            bitmap = BitmapFactory.decodeResource(context.getResources(), Integer.parseInt(music.getImage()));
         }
 
         PendingIntent pendingIntentPrevious;
@@ -73,7 +80,7 @@ public class CreateNotification {
         notification = new NotificationCompat.Builder(context, CHANEL_ID)
                 .setSmallIcon(R.drawable.iconplay)
                 .setContentTitle(music.getName())
-                .setContentText(music.getSinger())
+                .setContentText(music.isType() ? ((Music) music).getSingers().get(0).getName() : ((MusicOnDevice) music).getSinger())
                 .setLargeIcon(bitmap)
                 .addAction(drw_previous, "Previous", pendingIntentPrevious)
                 .addAction(playbutton, "Play", pendingIntentPlay)
