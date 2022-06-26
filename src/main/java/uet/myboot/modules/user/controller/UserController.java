@@ -12,7 +12,8 @@ import uet.myboot.modules.user.service.UserService;
 import uet.myboot.parent.main.EResponse;
 import uet.myboot.parent.main.JwtTokenUtil;
 
-import javax.jws.soap.SOAPBinding;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -34,6 +35,20 @@ public class UserController {
         return userService.filterUsers(userService.getAll());
     }
 
+    @GetMapping("/get-by-token")
+    public List<Music> getByToken(@RequestParam("token") String token) {
+        try {
+            String username = jwtTokenUtil.getUsernameFromToken(token);
+            User user = userService.getUserByUsername(username);
+
+            return musicService.filterMusics(new ArrayList<>(user.getFavourites()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return Collections.emptyList();
+    }
+
     @GetMapping("/like")
     public EResponse handleLike(@RequestParam("id") int id, @RequestParam("token") String token
                         ,  @RequestParam(value = "numberStatus") int numberStatus) {
@@ -50,7 +65,9 @@ public class UserController {
                 favourites.remove(music);
             }
             user.setFavourites(favourites);
+            music.setLikes(music.getUsers().size());
             userService.update(user);
+            musicService.update(music);
             return EResponse.SUCCESS;
         } catch (Exception e) {
             System.out.println(e.getMessage());

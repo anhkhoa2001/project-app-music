@@ -54,4 +54,8 @@ public class MusicService {
         return musics;
     }
 
+    public void update(Music t) {
+        musicRepository.save(t);
+    }
+
 }

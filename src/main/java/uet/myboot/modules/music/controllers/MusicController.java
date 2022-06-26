@@ -1,18 +1,17 @@
 package uet.myboot.modules.music.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import uet.myboot.modules.genre.models.MusicGenre;
 import uet.myboot.modules.genre.service.MusicGenreService;
 import uet.myboot.modules.music.models.Music;
 import uet.myboot.modules.music.services.MusicService;
 import uet.myboot.modules.singer.models.Singer;
 import uet.myboot.modules.singer.service.SingerService;
+import uet.myboot.parent.main.EResponse;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.*;
 
 @RestController
@@ -72,6 +71,20 @@ public class MusicController {
         }
 
         return musicService.filterMusics(musics);
+    }
+
+    //update view
+    @PutMapping(value = "/update-view")
+    public EResponse updateView(@Valid @RequestBody Music music) {
+        try {
+            musicService.update(music);
+
+            return EResponse.SUCCESS;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return EResponse.FAILED;
+        }
+
     }
 
 /*    @GetMapping(value = "/create")
