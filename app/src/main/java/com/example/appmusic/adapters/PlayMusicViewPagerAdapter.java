@@ -7,27 +7,38 @@ import androidx.lifecycle.Lifecycle;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.example.appmusic.fragments.MusicDiscFragment;
+import com.example.appmusic.fragments.PlayListFragment;
 
 
 public class PlayMusicViewPagerAdapter extends FragmentStateAdapter {
 
-    public PlayMusicViewPagerAdapter(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle) {
+    public MusicDiscFragment musicDiscFragment;
+    public PlayListFragment playListFragment;
+
+    public PlayMusicViewPagerAdapter(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle,
+                                     MusicDiscFragment musicDiscFragment, PlayListFragment playListFragment) {
         super(fragmentManager, lifecycle);
+        this.musicDiscFragment = musicDiscFragment;
+        this.playListFragment = playListFragment;
     }
+
+//    public PlayMusicViewPagerAdapter(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle) {
+//        super(fragmentManager, lifecycle);
+//    }
 
     @NonNull
     @Override
     public Fragment createFragment(int position) {
         switch (position) {
-/*            case 0:
-                return new PlayListFragment();*/
+            case 1:
+                return playListFragment;
             default:
-                return new MusicDiscFragment();
+                return musicDiscFragment;
         }
     }
 
     @Override
     public int getItemCount() {
-        return 1;
+        return 2;
     }
 }
