@@ -31,11 +31,9 @@ public class PlayListFragment extends Fragment {
     public TextView song_name;
     public TextView song_singer;
     public AMusic music;
-    public MyService myService;
 
-    public PlayListFragment(AMusic music, MyService myService) {
+    public PlayListFragment(AMusic music) {
         this.music = music;
-        this.myService = myService;
     }
 
     @Override
@@ -56,11 +54,11 @@ public class PlayListFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         recyclerView.setAdapter(playListAdapter);
 
-        init();
+        init(music);
         return view;
     }
 
-    public void init() {
+    public void init(AMusic music) {
         song_name.setText("Bài hát: " + music.getName());
         if(music.isType()) {
             Music music1 = (Music) music;

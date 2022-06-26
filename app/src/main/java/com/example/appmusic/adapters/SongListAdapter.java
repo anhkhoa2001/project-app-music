@@ -43,7 +43,7 @@ public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHo
     }
 
     public void handlerMusicStatic() {
-        musicStatic.setPlaylists(new HashSet<>(songList));
+        musicStatic.setPlaylists(songList);
         for(AMusic music : musicStatic.getPlaylists()) {
             Log.v("Music", "test test test" + music.getName());
         }

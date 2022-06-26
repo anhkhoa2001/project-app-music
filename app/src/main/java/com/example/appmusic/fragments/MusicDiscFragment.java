@@ -33,7 +33,6 @@ public class MusicDiscFragment extends Fragment {
     View view;
     CircleImageView circleImageView;
     ObjectAnimator objectAnimator;
-    long playTime;
     AMusic music;
 
     public MusicDiscFragment(AMusic music) {
@@ -43,7 +42,6 @@ public class MusicDiscFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -62,19 +60,18 @@ public class MusicDiscFragment extends Fragment {
     }
 
     public void playMusic(AMusic music) {
+        Log.v("Music", "check view" + circleImageView);
         Bitmap bitmap = null;
         if(music.isType()) {
             try {
-                Music music1 = (Music) music;
-                InputStream inputStream = new URL(music1.getImage()).openStream();
+                InputStream inputStream = new URL(music.getImage()).openStream();
                 bitmap = BitmapFactory.decodeStream(inputStream);
                 circleImageView.setImageBitmap(bitmap);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         } else {
-            MusicOnDevice musicOnDevice = (MusicOnDevice) music;
-            circleImageView.setImageResource(Integer.parseInt(musicOnDevice.getImage()));
+            circleImageView.setImageResource(Integer.parseInt(music.getImage()));
         }
     }
 

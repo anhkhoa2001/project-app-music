@@ -151,7 +151,7 @@ public class PlayMusicActivity extends Base implements
         }
         adapternhac = new PlayMusicViewPagerAdapter(getSupportFragmentManager(),getLifecycle(),
                             new MusicDiscFragment(music),
-                            new PlayListFragment(music, mService));
+                            new PlayListFragment(music));
         btnPlay.setImageResource(R.drawable.ic_pause_white);
         handlerSeekBar(mService.getPlayer());
 
@@ -237,7 +237,7 @@ public class PlayMusicActivity extends Base implements
 
         adapternhac = new PlayMusicViewPagerAdapter(getSupportFragmentManager(),getLifecycle(),
                             new MusicDiscFragment(music),
-                            new PlayListFragment(music, mService));
+                            new PlayListFragment(music));
 
         btnPlay.setImageResource(R.drawable.ic_pause_white);
 
@@ -282,11 +282,7 @@ public class PlayMusicActivity extends Base implements
         btnRandom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int rd = new Random().nextInt();
-                int randomIdMusic = (rd < 0) ? rd*(-1) : rd;
-                runMusic(aMusics[randomIdMusic%aMusics.length]);
-                createNewNotification(music, R.drawable.ic_pause_white);
-                adapternhac.musicDiscFragment.playMusic(music);
+                onMusicRandom();
             }
         });
 
@@ -312,11 +308,9 @@ public class PlayMusicActivity extends Base implements
                 if (isPlaying) {
                     btnPlay.setImageResource(R.drawable.iconplay);
                     onMusicNotiPause();
-                    createNewNotification(music, R.drawable.ic_play_white);
                 } else {
                     btnPlay.setImageResource(R.drawable.ic_pause_white);
                     onMusicNotiPlay();
-                    createNewNotification(music, R.drawable.ic_pause_white);
                 }
             }
         });
@@ -419,19 +413,13 @@ public class PlayMusicActivity extends Base implements
         }
     };
 
-    @Override
-    public void onMusicNotiPre() {
+    public void onMusicRandom() {
+        int rd = new Random().nextInt();
+        int randomIdMusic = (rd < 0) ? rd*(-1) : rd;
+        music = aMusics[randomIdMusic%aMusics.length];
         mService.getPlayer().reset();
-        music_id = music_id != 0 ? --music_id : aMusics.length - 1;
-        music = aMusics[music_id];
         if(music.isType()) {
-            try {
-                mService.getPlayer().setDataSource(music.getSource());
-                mService.getPlayer().prepare();
-                mService.getPlayer().start();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            mService.startMedia(music.getSource());
         } else {
             mService.setPlayer(MediaPlayer.create(this, Integer.parseInt(music.getSource())));
             mService.getPlayer().start();
@@ -439,6 +427,25 @@ public class PlayMusicActivity extends Base implements
         handlerSeekBar(mService.getPlayer());
         createNewNotification(music, R.drawable.ic_pause_white);
         adapternhac.musicDiscFragment.playMusic(music);
+        adapternhac.playListFragment.init(music);
+        actionBar.setTitle(music.getName());
+    }
+
+    @Override
+    public void onMusicNotiPre() {
+        mService.getPlayer().reset();
+        music_id = music_id != 0 ? --music_id : aMusics.length - 1;
+        music = aMusics[music_id];
+        if(music.isType()) {
+            mService.startMedia(music.getSource());
+        } else {
+            mService.setPlayer(MediaPlayer.create(this, Integer.parseInt(music.getSource())));
+            mService.getPlayer().start();
+        }
+        handlerSeekBar(mService.getPlayer());
+        createNewNotification(music, R.drawable.ic_pause_white);
+        adapternhac.musicDiscFragment.playMusic(music);
+        actionBar.setTitle(music.getName());
     }
 
     @Override
@@ -477,13 +484,7 @@ public class PlayMusicActivity extends Base implements
         music_id = music_id < aMusics.length - 1 ? ++music_id : 0;
         music = aMusics[music_id];
         if(music.isType()) {
-            try {
-                mService.getPlayer().setDataSource(music.getSource());
-                mService.getPlayer().prepare();
-                mService.getPlayer().start();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            mService.startMedia(music.getSource());
         } else {
             mService.setPlayer(MediaPlayer.create(this, Integer.parseInt(music.getSource())));
             mService.getPlayer().start();
@@ -491,6 +492,7 @@ public class PlayMusicActivity extends Base implements
         handlerSeekBar(mService.getPlayer());
         createNewNotification(music, R.drawable.ic_pause_white);
         adapternhac.musicDiscFragment.playMusic(music);
+        actionBar.setTitle(music.getName());
     }
 
     ServiceConnection serviceConnection = new ServiceConnection() {

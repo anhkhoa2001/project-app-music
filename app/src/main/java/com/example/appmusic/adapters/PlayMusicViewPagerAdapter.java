@@ -37,6 +37,14 @@ public class PlayMusicViewPagerAdapter extends FragmentStateAdapter {
         }
     }
 
+    public MusicDiscFragment getMusicDiscFragment() {
+        return musicDiscFragment;
+    }
+
+    public void setMusicDiscFragment(MusicDiscFragment musicDiscFragment) {
+        this.musicDiscFragment = musicDiscFragment;
+    }
+
     @Override
     public int getItemCount() {
         return 2;
