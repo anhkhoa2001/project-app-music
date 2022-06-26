@@ -90,6 +90,7 @@ public class PopularFragment extends Fragment {
                     Intent intent = new Intent(getActivity(), SongListActivity.class);
                     intent.putExtra("ID", populars.get(finalI).getId());
                     intent.putExtra("Source", populars.get(finalI).getSource());
+                    intent.putExtra("Name", populars.get(finalI).getName());
                     startActivity(intent);
                 }
             });

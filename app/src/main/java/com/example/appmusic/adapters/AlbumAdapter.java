@@ -68,6 +68,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> 
                     Intent intent = new Intent(context, SongListActivity.class);
                     intent.putExtra("Album_ID", albums.get(getLayoutPosition()).getId());
                     intent.putExtra("Source", albums.get(getLayoutPosition()).getMusics().get(0).getImage());
+                    intent.putExtra("Name", albums.get(getLayoutPosition()).getName());
                     context.startActivity(intent);
                 }
             });

@@ -15,6 +15,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.StrictMode;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
@@ -22,6 +23,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -44,6 +46,7 @@ import java.util.concurrent.TimeUnit;
 
 public class PlayMusicActivity extends Base implements
         MediaPlayer.OnCompletionListener, MediaPlayer.OnBufferingUpdateListener, View.OnTouchListener, IPlayable {
+    ActionBar actionBar;
     Toolbar toolbar;
     TextView txtTime, txtTotalTime;
     SeekBar seekBar;
@@ -95,6 +98,21 @@ public class PlayMusicActivity extends Base implements
         createNewNotification(music, R.drawable.ic_pause_white);
     }
 
+    //sq
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId())
+        {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+
+            default:break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+    //end
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,6 +128,12 @@ public class PlayMusicActivity extends Base implements
         init();
         this.bindService(intentInService, serviceConnection, Context.BIND_AUTO_CREATE);
         isPlaying = true;
+
+        //sq
+        actionBar = getSupportActionBar();
+        actionBar.setTitle(music.getName());
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        //end
     }
 
     public void runMusic(AMusic music) {

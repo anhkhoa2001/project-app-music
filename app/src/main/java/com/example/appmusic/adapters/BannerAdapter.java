@@ -71,6 +71,7 @@ public class BannerAdapter extends PagerAdapter {
                 Intent intent = new Intent(context, SongListActivity.class);
                 intent.putExtra("ID", arrayListBanner.get(position).getId());
                 intent.putExtra("Source", arrayListBanner.get(position).getSource());
+                intent.putExtra("Name", arrayListBanner.get(position).getName());
                 context.startActivity(intent);
             }
         });

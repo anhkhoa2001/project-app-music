@@ -60,18 +60,16 @@ public class SongListActivity extends Base {
         if (intent != null) {
             if (intent.hasExtra("Source")) {
                 String source = intent.getStringExtra("Source");
-                Log.v("Music", "collap source" + source);
-                // Truy Vấn DB với id
-
-                //source là link ảnh
-                //set source vào collapsingtoolbarLayout
                 new LoadImageURL(collapView).execute(source);
+            }
+
+            if(intent.hasExtra("Name")) {
+                String name = intent.getStringExtra("Name");
+                actionBar.setTitle(name);
+                actionBar.setDisplayHomeAsUpEnabled(true);
             }
         }
         getDataIntent(intent);
-
-        actionBar.setTitle("Tên Album");
-        actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
     //sq
