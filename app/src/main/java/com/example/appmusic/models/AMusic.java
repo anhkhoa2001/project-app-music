@@ -1,5 +1,7 @@
 package com.example.appmusic.models;
 
+import java.util.Set;
+
 public abstract class AMusic {
 
     private int id;
@@ -7,9 +9,10 @@ public abstract class AMusic {
     private int musicTracks;//tinh theo s
     private int listens;
     private int likes;
-    private boolean type;
+    private boolean type;//true thi nhac online
     private String source;
     private String image;
+    private Set<AMusic> playlists;
 
     public int getId() {
         return id;
@@ -73,5 +76,13 @@ public abstract class AMusic {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public Set<AMusic> getPlaylists() {
+        return playlists;
+    }
+
+    public void setPlaylists(Set<AMusic> playlists) {
+        this.playlists = playlists;
     }
 }

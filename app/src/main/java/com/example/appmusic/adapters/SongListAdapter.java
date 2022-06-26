@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,7 @@ import com.example.appmusic.R;
 import com.example.appmusic.models.MusicOnDevice;
 import com.example.appmusic.result.EResponse;
 
+import java.util.HashSet;
 import java.util.List;
 
 public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHolder>{
@@ -38,6 +40,13 @@ public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHo
         this.songList = songList;
         this.id = id;
         this.type_id = type_id;
+    }
+
+    public void handlerMusicStatic() {
+        musicStatic.setPlaylists(new HashSet<>(songList));
+        for(AMusic music : musicStatic.getPlaylists()) {
+            Log.v("Music", "test test test" + music.getName());
+        }
     }
 
     @NonNull
@@ -122,6 +131,7 @@ public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHo
                     intent.putExtra("Musics", listToStrings(songList));
                     musicStatic = songList.get(Integer.parseInt(songIndex.getText().toString()) - 1);
                     context.startActivity(intent);
+                    handlerMusicStatic();
                 }
             });
         }

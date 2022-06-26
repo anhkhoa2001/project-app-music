@@ -80,7 +80,6 @@ public class PlayMusicActivity extends Base implements
 
     private static final int LISTEN_TIME_THRESH_HOLD = 30; //30s
 
-
     private NotificationManager notificationManager;
 
     private final Handler handler = new Handler();

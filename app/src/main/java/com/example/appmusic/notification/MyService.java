@@ -10,7 +10,7 @@ import com.example.appmusic.adapters.SongListAdapter;
 
 import java.io.IOException;
 
-public class MyService extends Service{
+public class MyService extends Service {
     public static MediaPlayer player;
 
     private final IBinder binder = new LocalBinder();
