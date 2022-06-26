@@ -7,8 +7,10 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.ImageView;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -36,6 +38,7 @@ public class SongListActivity extends Base {
     private String name;
     private SongListAdapter songListAdapter;
     private ImageView collapView;
+    ActionBar actionBar;
 
     @Override
     public void onBackPressed() {
@@ -51,7 +54,7 @@ public class SongListActivity extends Base {
         collapsingtoolbarLayout = findViewById(R.id.collapsing_toolbar);
         recyclerviewSongList = findViewById(R.id.recyclerView_SongList);
         collapView = findViewById(R.id.collap_view);
-
+        actionBar = getSupportActionBar();
         //set background
         Intent intent = getIntent();
         if (intent != null) {
@@ -66,7 +69,25 @@ public class SongListActivity extends Base {
             }
         }
         getDataIntent(intent);
+
+        actionBar.setTitle("Tên Album");
+        actionBar.setDisplayHomeAsUpEnabled(true);
     }
+
+    //sq
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId())
+        {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+
+            default:break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+    //end
 
     public void getDataIntent(Intent intent) {
 

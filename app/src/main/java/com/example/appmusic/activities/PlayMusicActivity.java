@@ -25,6 +25,7 @@ import android.widget.Toast;
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.example.appmusic.models.MusicOnDB;
 import com.example.appmusic.R;
 import com.example.appmusic.adapters.PlayMusicViewPagerAdapter;
 import com.example.appmusic.adapters.SongListAdapter;
@@ -90,6 +91,7 @@ public class PlayMusicActivity extends Base implements
         super.onStart();
         createChannel();
         registerReceiver(broadcastReceiver, new IntentFilter("TRACKS_TRACKS"));
+        Log.v("Music", "on start" + music);
         createNewNotification(music, R.drawable.ic_pause_white);
     }
 
@@ -123,6 +125,9 @@ public class PlayMusicActivity extends Base implements
             mService.setPlayer(MediaPlayer.create(getApplicationContext(), Integer.parseInt(music.getSource())));
             mService.getPlayer().start();
         }
+        adapternhac = new PlayMusicViewPagerAdapter(getSupportFragmentManager(),getLifecycle(),
+                            new MusicDiscFragment(music),
+                            new PlayListFragment(music, mService));
         btnPlay.setImageResource(R.drawable.ic_pause_white);
         handlerSeekBar(mService.getPlayer());
 
@@ -207,22 +212,38 @@ public class PlayMusicActivity extends Base implements
         viewPager = findViewById(R.id.viewpaper_play_nhac);
 
         adapternhac = new PlayMusicViewPagerAdapter(getSupportFragmentManager(),getLifecycle(),
-                new MusicDiscFragment(music.getImage()),
-                new PlayListFragment());
+                            new MusicDiscFragment(music),
+                            new PlayListFragment(music, mService));
 
         btnPlay.setImageResource(R.drawable.ic_pause_white);
 
         viewPager.setAdapter(adapternhac);
         eventOnclickMusic();
         seekBar.setOnTouchListener(this);
-/*        dbManage.deleteAll();
+        dbManage.deleteAll();
         for(int i=0; i<aMusics.length; i++) {
             if(i == music_id) {
                 saveMusicMostRecently(aMusics[i], true);
             } else {
                 saveMusicMostRecently(aMusics[i], false);
             }
-        }*/
+        }
+    }
+
+    public void saveMusicMostRecently(AMusic music, boolean status) {
+        MusicOnDB musicOnDB = new MusicOnDB();
+        musicOnDB.setName(music.getName());
+        musicOnDB.setSource(music.getSource());
+        musicOnDB.setImage(music.getImage());
+        musicOnDB.setStatus(status);
+        if(music.isType()) {
+            musicOnDB.setType(true);
+            musicOnDB.setSinger(((Music) music).singersToString());
+        } else {
+            musicOnDB.setType(false);
+            musicOnDB.setSinger(((MusicOnDevice) music).getSinger());
+        }
+        dbManage.add(musicOnDB);
     }
 
     public void eventOnclickMusic() {
@@ -241,6 +262,7 @@ public class PlayMusicActivity extends Base implements
                 int randomIdMusic = (rd < 0) ? rd*(-1) : rd;
                 runMusic(aMusics[randomIdMusic%aMusics.length]);
                 createNewNotification(music, R.drawable.ic_pause_white);
+                adapternhac.musicDiscFragment.playMusic(music);
             }
         });
 
@@ -392,6 +414,7 @@ public class PlayMusicActivity extends Base implements
         }
         handlerSeekBar(mService.getPlayer());
         createNewNotification(music, R.drawable.ic_pause_white);
+        adapternhac.musicDiscFragment.playMusic(music);
     }
 
     @Override
@@ -443,6 +466,7 @@ public class PlayMusicActivity extends Base implements
         }
         handlerSeekBar(mService.getPlayer());
         createNewNotification(music, R.drawable.ic_pause_white);
+        adapternhac.musicDiscFragment.playMusic(music);
     }
 
     ServiceConnection serviceConnection = new ServiceConnection() {

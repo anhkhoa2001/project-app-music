@@ -124,12 +124,9 @@ public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHo
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(context, PlayMusicActivity.class);
-                    intent.putExtra("Music_Source", songList.get(Integer.parseInt(songIndex.getText().toString()) - 1).getSource());
-                    intent.putExtra("Music_ID", id);
-                    intent.putExtra("Type_ID", type_id);
-                    intent.putExtra("ID", Integer.parseInt(songIndex.getText().toString()) - 1);
-                    intent.putExtra("Musics", listToStrings(songList));
                     musicStatic = songList.get(Integer.parseInt(songIndex.getText().toString()) - 1);
+                    musicStatic.setId(Integer.parseInt(songIndex.getText().toString()) - 1);
+                    Base.musicStatic = musicStatic;
                     context.startActivity(intent);
                     handlerMusicStatic();
                 }

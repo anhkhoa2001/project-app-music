@@ -2,6 +2,7 @@ package com.example.appmusic.fragments;
 
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -9,30 +10,34 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.LinearInterpolator;
 
 import com.example.appmusic.R;
+import com.example.appmusic.models.AMusic;
+import com.example.appmusic.models.Music;
+import com.example.appmusic.models.MusicOnDevice;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.ContentHandler;
 import java.net.URL;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class MusicDiscFragment extends Fragment {
-
     View view;
     CircleImageView circleImageView;
     ObjectAnimator objectAnimator;
     long playTime;
-    String img;
+    AMusic music;
 
-    public MusicDiscFragment(String img) {
-        this.img = img;
+    public MusicDiscFragment(AMusic music) {
+        this.music = music;
     }
 
     @Override
@@ -41,12 +46,11 @@ public class MusicDiscFragment extends Fragment {
 
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_music_disc, container, false);
         circleImageView = view.findViewById(R.id.img_dianhac);
-        playMusic(img);
+        playMusic(music);
         objectAnimator = ObjectAnimator.ofFloat(circleImageView, "rotation", 0f, 360f);
         objectAnimator.setDuration(20000);
         objectAnimator.setRepeatCount(ValueAnimator.INFINITE);
@@ -57,23 +61,21 @@ public class MusicDiscFragment extends Fragment {
         return view;
     }
 
-    public void playMusic(String img) {
-        try {
-            new LoadImageURL(circleImageView).execute(img);
-        } catch (Exception e) {
-            circleImageView.setImageResource(R.drawable.iconfloatingactionbutton);
-        };
-    }
-
-    public void stopDisc() {
-        playTime = objectAnimator.getCurrentPlayTime();
-        objectAnimator.cancel();
-    }
-
-    public void startDisc() {
-        objectAnimator.setCurrentPlayTime(playTime);
-        objectAnimator.start();
-
+    public void playMusic(AMusic music) {
+        Bitmap bitmap = null;
+        if(music.isType()) {
+            try {
+                Music music1 = (Music) music;
+                InputStream inputStream = new URL(music1.getImage()).openStream();
+                bitmap = BitmapFactory.decodeStream(inputStream);
+                circleImageView.setImageBitmap(bitmap);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            MusicOnDevice musicOnDevice = (MusicOnDevice) music;
+            circleImageView.setImageResource(Integer.parseInt(musicOnDevice.getImage()));
+        }
     }
 
     private class LoadImageURL extends AsyncTask<String, Void, Bitmap> {

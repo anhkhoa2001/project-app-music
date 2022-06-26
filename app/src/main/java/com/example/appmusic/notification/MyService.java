@@ -6,6 +6,7 @@ import android.media.MediaPlayer;
 import android.os.Binder;
 import android.os.IBinder;
 
+import com.example.appmusic.activities.Base;
 import com.example.appmusic.adapters.SongListAdapter;
 
 import java.io.IOException;
@@ -27,11 +28,11 @@ public class MyService extends Service {
 
     @Override
     public IBinder onBind(Intent intent) {
-        if(SongListAdapter.musicStatic.isType()) {
+        if(Base.musicStatic.isType()) {
             player = new MediaPlayer();
-            startMedia(SongListAdapter.musicStatic.getSource());
+            startMedia(Base.musicStatic.getSource());
         } else {
-            player = MediaPlayer.create(getApplicationContext(), Integer.parseInt(SongListAdapter.musicStatic.getSource()));
+            player = MediaPlayer.create(getApplicationContext(), Integer.parseInt(Base.musicStatic.getSource()));
             player.start();
         }
         return this.binder;
